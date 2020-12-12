@@ -9,9 +9,9 @@ import { Provider } from 'react-redux';
 export default class FeaturedRooms extends Component {
     static contextType = RoomContext;
     render() {
-        let { loading , featuredRooms: books} = this.context;
-        books = books.map(book => {
-            return <Room key={book.id} book={book} />
+        let { loading , featuredRooms: roomTypes} = this.context;
+        roomTypes = roomTypes.map(roomType => {
+            return <Room key={roomType.id} roomType={roomType} />
         });
         return (
             <section className="featured-rooms">

@@ -1,1 +1,1 @@
-export * from './Admin/bookActions';
+export * from './Admin/roomTypeActions';

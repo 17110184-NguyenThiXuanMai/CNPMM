@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import { deleteBook } from '../../services/index';
+import { deleteRoomType } from '../../services/index';
 
 import './../../css/Style.css';
 import store from '../../services/store';
@@ -9,15 +9,15 @@ import { Provider } from 'react-redux';
 import axios from 'axios';
 import Room from './Room'
 
-class BookList extends Component {
+class RoomList extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            books: [],
+            roomTypes: [],
             search: '',
             currentPage: 1,
-            booksPerPage: 5,
+            roomTypesPerPage: 5,
             sortDir: "asc"
         };
     }
@@ -25,21 +25,21 @@ class BookList extends Component {
     sortData = () => {
         setTimeout(() => {
             this.state.sortDir === "asc" ? this.setState({ sortDir: "desc" }) : this.setState({ sortDir: "asc" });
-            this.findAllBooks(this.state.currentPage);
+            this.findAllRoomTypes(this.state.currentPage);
         }, 500);
     };
 
     componentDidMount() {
-        this.findAllBooks(this.state.currentPage);
+        this.findAllRoomTypes(this.state.currentPage);
     }
 
-    findAllBooks(currentPage) {
+    findAllRoomTypes(currentPage) {
         currentPage -= 1;
-        axios.get("http://localhost:8080/api/test/books?pageNumber=" + currentPage + "&pageSize=" + this.state.booksPerPage + "&sortBy=price&sortDir=" + this.state.sortDir)
+        axios.get("http://localhost:8080/api/test/roomtypes?pageNumber=" + currentPage + "&pageSize=" + this.state.roomTypesPerPage + "&sortBy=price&sortDir=" + this.state.sortDir)
             .then(response => response.data)
             .then((data) => {
                 this.setState({
-                    books: data.content,
+                    roomTypes: data.content,
                     totalPages: data.totalPages,
                     totalElements: data.totalElements,
                     currentPage: data.number + 1
@@ -47,13 +47,13 @@ class BookList extends Component {
             });
     };
 
-    deleteBook = (bookId) => {
-        this.props.deleteBook(bookId);
+    deleteRoomType = (roomTypeId) => {
+        this.props.deleteRoomType(roomTypeId);
         setTimeout(() => {
-            if (this.props.bookObject != null) {
+            if (this.props.roomTypeObject != null) {
                 this.setState({ "show": true });
                 setTimeout(() => this.setState({ "show": false }), 3000);
-                this.findAllBooks(this.state.currentPage);
+                this.findAllRoomTypes(this.state.currentPage);
             } else {
                 this.setState({ "show": false });
             }
@@ -65,7 +65,7 @@ class BookList extends Component {
         if (this.state.search) {
             this.searchData(targetPage);
         } else {
-            this.findAllBooks(targetPage);
+            this.findAllRoomTypes(targetPage);
         }
         this.setState({
             [event.target.name]: targetPage
@@ -80,16 +80,16 @@ class BookList extends Component {
 
     cancelSearch = () => {
         this.setState({ "search": '' });
-        this.findAllBooks(this.state.currentPage);
+        this.findAllRoomTypes(this.state.currentPage);
     };
 
     searchData = (currentPage) => {
         currentPage -= 1;
-        axios.get("http://localhost:8080/api/test/books/search/" + this.state.search + "?page=" + currentPage + "&size=" + this.state.booksPerPage)
+        axios.get("http://localhost:8080/api/test/roomtypes/search/" + this.state.search + "?page=" + currentPage + "&size=" + this.state.roomTypesPerPage)
             .then(response => response.data)
             .then((data) => {
                 this.setState({
-                    books: data.content,
+                    roomTypes: data.content,
                     totalPages: data.totalPages,
                     totalElements: data.totalElements,
                     currentPage: data.number + 1
@@ -99,14 +99,14 @@ class BookList extends Component {
 
 
     render() {
-        const { books } = this.state;
+        const { roomTypes } = this.state;
 
         return (
             <section className="roomslist">
                 <div className="roomslist-center">
                     <Provider store={store}>
-                        {books.map(book => {
-                            return <Room key={book.id} room={book} />;
+                        {roomTypes.map(roomType => {
+                            return <Room key={roomType.id} room={roomType} />;
                         })
                         }
                     </Provider>
@@ -118,17 +118,17 @@ class BookList extends Component {
 
 const mapStateToProps = state => {
     return {
-        bookObject: state.book
+        roomTypeObject: state.roomType
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        deleteBook: (bookId) => dispatch(deleteBook(bookId))
+        deleteRoomType: (roomTypeId) => dispatch(deleteRoomType(roomTypeId))
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(BookList);
+export default connect(mapStateToProps, mapDispatchToProps)(RoomList);
 
 
 

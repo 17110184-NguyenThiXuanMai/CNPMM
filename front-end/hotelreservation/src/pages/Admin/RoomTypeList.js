@@ -1,24 +1,24 @@
 import React, {Component} from 'react';
 
 import {connect} from 'react-redux';
-import {deleteBook} from '../../services/index';
+import {deleteRoomType} from '../../services/index';
 
 import './../../css/Style.css';
-import {Card, Table, Image, ButtonGroup, Button, InputGroup, FormControl, Row} from 'react-bootstrap';
+import {Card, Table, Image, ButtonGroup, Button, InputGroup, FormControl} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import MyToast from '../../components/Admin/MyToast';
 import axios from 'axios';
 import { BsFillTrashFill, BsPencilSquare, BsSearch, BsFillXCircleFill, BsList, BsChevronBarRight, BsChevronRight, BsChevronLeft, BsChevronBarLeft} from "react-icons/bs";
 
-class BookList extends Component {
+class RoomTypeList extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            books : [],
+            roomTypes : [],
             search : '',
             currentPage : 1,
-            booksPerPage : 5,
+            roomTypesPerPage : 5,
             sortDir: "asc"
         };
     }
@@ -26,12 +26,12 @@ class BookList extends Component {
     sortData = () => {
         setTimeout(() => {
             this.state.sortDir === "asc" ? this.setState({sortDir: "desc"}) : this.setState({sortDir: "asc"});
-            this.findAllBooks(this.state.currentPage);
+            this.findAllRoomTypes(this.state.currentPage);
         }, 500);
     };
 
     componentDidMount() {
-        this.findAllBooks(this.state.currentPage);
+        this.findAllRoomTypes(this.state.currentPage);
     }
 
     /*findAllBooks() {
@@ -42,13 +42,13 @@ class BookList extends Component {
             });
     };*/
 
-    findAllBooks(currentPage) {
+    findAllRoomTypes(currentPage) {
         currentPage -= 1;
-        axios.get("http://localhost:8080/api/test/books?pageNumber="+currentPage+"&pageSize="+this.state.booksPerPage+"&sortBy=price&sortDir="+this.state.sortDir)
+        axios.get("http://localhost:8080/api/test/roomtypes?pageNumber="+currentPage+"&pageSize="+this.state.roomTypesPerPage+"&sortBy=price&sortDir="+this.state.sortDir)
             .then(response => response.data)
             .then((data) => {
                 this.setState({
-                    books: data.content,
+                    roomTypes: data.content,
                     totalPages: data.totalPages,
                     totalElements: data.totalElements,
                     currentPage: data.number + 1
@@ -74,13 +74,13 @@ class BookList extends Component {
         });
     };*/
 
-    deleteBook = (bookId) => {
-        this.props.deleteBook(bookId);
+    deleteRoomType = (roomTypeId) => {
+        this.props.deleteRoomType(roomTypeId);
         setTimeout(() => {
-            if(this.props.bookObject != null) {
+            if(this.props.roomTypeObject != null) {
                 this.setState({"show":true});
                 setTimeout(() => this.setState({"show":false}), 3000);
-                this.findAllBooks(this.state.currentPage);
+                this.findAllRoomTypes(this.state.currentPage);
             } else {
                 this.setState({"show":false});
             }
@@ -104,7 +104,7 @@ class BookList extends Component {
         if(this.state.search) {
             this.searchData(targetPage);
         } else {
-            this.findAllBooks(targetPage);
+            this.findAllRoomTypes(targetPage);
         }
         this.setState({
             [event.target.name]: targetPage
@@ -117,7 +117,7 @@ class BookList extends Component {
             if(this.state.search) {
                 this.searchData(firstPage);
             } else {
-                this.findAllBooks(firstPage);
+                this.findAllRoomTypes(firstPage);
             }
         }
     };
@@ -128,28 +128,28 @@ class BookList extends Component {
             if(this.state.search) {
                 this.searchData(this.state.currentPage - prevPage);
             } else {
-                this.findAllBooks(this.state.currentPage - prevPage);
+                this.findAllRoomTypes(this.state.currentPage - prevPage);
             }
         }
     };
 
     lastPage = () => {
-        let condition = Math.ceil(this.state.totalElements / this.state.booksPerPage);
+        let condition = Math.ceil(this.state.totalElements / this.state.roomTypesPerPage);
         if(this.state.currentPage < condition) {
             if(this.state.search) {
                 this.searchData(condition);
             } else {
-                this.findAllBooks(condition);
+                this.findAllRoomTypes(condition);
             }
         }
     };
 
     nextPage = () => {
-        if(this.state.currentPage < Math.ceil(this.state.totalElements / this.state.booksPerPage)) {
+        if(this.state.currentPage < Math.ceil(this.state.totalElements / this.state.roomTypesPerPage)) {
             if(this.state.search) {
                 this.searchData(this.state.currentPage + 1);
             } else {
-                this.findAllBooks(this.state.currentPage + 1);
+                this.findAllRoomTypes(this.state.currentPage + 1);
             }
         }
     };
@@ -162,16 +162,16 @@ class BookList extends Component {
 
     cancelSearch = () => {
         this.setState({"search" : ''});
-        this.findAllBooks(this.state.currentPage);
+        this.findAllRoomTypes(this.state.currentPage);
     };
 
     searchData = (currentPage) => {
         currentPage -= 1;
-        axios.get("http://localhost:8080/api/test/books/search/"+this.state.search+"?page="+currentPage+"&size="+this.state.booksPerPage)
+        axios.get("http://localhost:8080/api/test/roomtypes/search/"+this.state.search+"?page="+currentPage+"&size="+this.state.roomTypesPerPage)
             .then(response => response.data)
             .then((data) => {
                 this.setState({
-                    books: data.content,
+                    roomTypes: data.content,
                     totalPages: data.totalPages,
                     totalElements: data.totalElements,
                     currentPage: data.number + 1
@@ -184,16 +184,16 @@ class BookList extends Component {
     };
 
     render() {
-        const {books, currentPage, totalPages, search} = this.state;
+        const {roomTypes, currentPage, totalPages, search} = this.state;
 
         return (
             <div className="container">
                 <div style={{"display":this.state.show ? "block" : "none"}}>
-                    <MyToast show = {this.state.show} message = {"Book Deleted Successfully."} type = {"danger"}/>
+                    <MyToast show = {this.state.show} message = {"RoomType Deleted Successfully."} type = {"danger"}/>
                 </div>
                 <Card className={"card"}>
                     <Card.Header>
-                        <div style={{"float":"left"}}> <BsList /> Book List
+                        <div style={{"float":"left"}}> <BsList /> RoomType List
                         <InputGroup size="sm">
                                 <FormControl placeholder="Search" name="search" value={search}
                                     className={"info-border bg-dark"}                                   
@@ -218,35 +218,44 @@ class BookList extends Component {
                         <Table className="table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                  <th>Title</th>
-                                  <th>Author</th>
-                                  <th>ISBN Number</th>
+                                  <th>Title Room Type</th>
+                                  <th>Slug</th>
+                                  <th>Type</th>
                                   <th onClick={this.sortData}>Price <div className={this.state.sortDir === "asc" ? "arrow arrow-up" : "arrow arrow-down"}> </div></th>
-                                  <th>Language</th>
-                                  <th>Genre</th>
-                                  <th>Actions</th>
+                                  <th>Size</th>
+                                  <th>Amount</th>
+                                  <th>Capacity</th>
+                                  <th>Description</th>
+                                  {/* <th>Pets</th>
+                                  <th>Breakfast</th>
+                                  <th>Featured</th> */}
                                 </tr>
                               </thead>
                               <tbody>
                                 {
-                                    books.length === 0 ?
+                                    roomTypes.length === 0 ?
                                     <tr align="center">
-                                      <td colSpan="7">No Books Available.</td>
+                                      <td colSpan="11">No RoomTypes Available.</td>
                                     </tr> :
-                                    books.map((book) => (
-                                    <tr key={book.id}>
+                                    roomTypes.map((roomType) => (
+                                    <tr key={roomType.id}>
                                         <td>
-                                            <Image src={book.coverPhotoURL} rounded width="100" height="100"/> {book.title}
+                                            <Image src={roomType.coverPhotoURL} rounded width="100" height="100"/>{roomType.titleRoomType}
                                         </td>
-                                        <td>{book.author}</td>
-                                        <td>{book.isbnNumber}</td>
-                                        <td>{book.price}</td>
-                                        <td>{book.language}</td>
-                                        <td>{book.genre}</td>
+                                        <td>{roomType.slug}</td>
+                                        <td>{roomType.type}</td>
+                                        <td>{roomType.price}</td>
+                                        <td>{roomType.size}</td>
+                                        <td>{roomType.amount}</td>
+                                        <td>{roomType.capacity}</td>
+                                        <td>{roomType.description}</td>
+                                        {/* <td>{roomType.pets}</td>
+                                        <td>{roomType.breakfast}</td>
+                                        <td>{roomType.featured}</td> */}
                                         <td>
                                             <ButtonGroup>
-                                                <Link to={"admin/edit/"+book.id} className="btn btn-sm btn-outline-primary"><BsPencilSquare /></Link>{' '}
-                                                <Button size="sm" variant="outline-danger" onClick={this.deleteBook.bind(this, book.id)}><BsFillTrashFill /></Button>
+                                                <Link to={"admin/edit/"+roomType.id} className="btn btn-sm btn-outline-primary"><BsPencilSquare /></Link>{' '}
+                                                <Button size="sm" variant="outline-danger" onClick={this.deleteRoomType.bind(this, roomType.id)}><BsFillTrashFill /></Button>
                                             </ButtonGroup>
                                         </td>
                                     </tr>
@@ -255,7 +264,7 @@ class BookList extends Component {
                               </tbody>
                         </Table>
                     </Card.Body>
-                    {books.length > 0 ?
+                    {roomTypes.length > 0 ?
                         <Card.Footer>
                             <div style={{"float":"left"}}>
                                 Showing Page {currentPage} of {totalPages}
@@ -296,14 +305,14 @@ class BookList extends Component {
 
 const mapStateToProps = state => {
     return {
-        bookObject: state.book
+        roomTypeObject: state.roomType
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        deleteBook: (bookId) => dispatch(deleteBook(bookId))
+        deleteRoomType: (roomTypeId) => dispatch(deleteRoomType(roomTypeId))
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(BookList);
+export default connect(mapStateToProps, mapDispatchToProps)(RoomTypeList);

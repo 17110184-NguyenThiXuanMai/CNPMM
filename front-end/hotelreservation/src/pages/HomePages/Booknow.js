@@ -1,7 +1,7 @@
 import React, {Component } from 'react';
 
 import {connect} from 'react-redux';
-import {saveBook, fetchBook, updateBook} from '../../services/index';
+import {saveRoomType, fetchRoomType, updateRoomType} from '../../services/index';
 
 import {Link} from 'react-router-dom'
 import {RoomContext} from '../../context'
@@ -12,94 +12,90 @@ class Booknow extends Component {
         super(props);
         this.state = this.initialState;
         this.state = {
-            genres: [],
-            languages : [],
+            type: [],
             show : false,
+            // defaultBcg
         };
-        this.bookChange = this.bookChange.bind(this);
-        this.submitBook = this.submitBook.bind(this);
+        this.roomTypeChange = this.roomTypeChange.bind(this);
+        this.submitRoomType = this.submitRoomType.bind(this);
     }  
 
     initialState = {
-        id:'', title:'', author:'', coverPhotoURL:'', isbnNumber:'', price:'', language:'', genre:''
+        id:'', titleRoomType:'', slug:'',type:'',size:'',amount:'', capacity:'',pets:'',breakfast:'',featured:'',description:'', coverPhotoURL:'', price:''
     };
     static contextType = RoomContext;
 
     componentDidMount() {
-        const bookId = +this.props.match.params.id;
-        if(bookId) {
-            this.findBookById(bookId);
+        const roomTypeId = +this.props.match.params.id;
+        if(roomTypeId) {
+            this.findRoomTypeById(roomTypeId);
         }
-        this.findAllLanguages();
-        this.findAllGenres();
+        this.findAllTypes();
     }
 
-    findAllLanguages = () => {
-        axios.get("http://localhost:8080/api/test/books/languages")
+    findAllTypes = () => {
+        axios.get("http://localhost:8080/api/test/roomtypes/types")
             .then(response => response.data)
             .then((data) => {
                 this.setState({
-                    languages: [{value:'', display:'Select Language'}]
-                        .concat(data.map(language => {
-                            return {value:language, display:language}
+                    types: [{value:'', display:'Select Type'}]
+                        .concat(data.map(type => {
+                            return {value:type, display:type}
                         }))
                 });
             });
     };
 
-    findAllGenres = () => {
-        axios.get("http://localhost:8080/api/test/books/genres")
-            .then(response => response.data)
-            .then((data) => {
-                this.setState({
-                    genres: [{value:'', display:'Select Genre'}]
-                        .concat(data.map(genre => {
-                            return {value:genre, display:genre}
-                        }))
-                });
-            });
-    };
-
-    findBookById = (bookId) => {
-        this.props.fetchBook(bookId);
+    findRoomTypeById = (roomTypeId) => {
+        this.props.fetchRoomType(roomTypeId);
         setTimeout(() => {
-            let book = this.props.bookObject.book;
-            if(book != null) {
+            let roomType = this.props.roomTypeObject.roomType;
+            if(roomType != null) {
                 this.setState({
-                    id: book.id,
-                    title: book.title,
-                    author: book.author,
-                    coverPhotoURL: book.coverPhotoURL,
-                    isbnNumber: book.isbnNumber,
-                    price: book.price,
-                    language: book.language,
-                    genre: book.genre
+                    id: roomType.id,
+                    titleRoomType: roomType.titleRoomType,
+                    slug: roomType.slug,
+                    type: roomType.type,
+                    size: roomType.size,
+                    amount: roomType.amount,
+                    capacity: roomType.capacity,
+                    pets: roomType.pets,
+                    breakfast: roomType.breakfast,
+                    featured: roomType.featured,
+                    description: roomType.description,
+                    coverPhotoURL: roomType.coverPhotoURL,
+                    price: roomType.price
                 });
             }
         }, 1000);
     };
 
-    resetBook = () => {
+    resetRoomType = () => {
         this.setState(() => this.initialState);
     };
 
 
-    submitBook = event => {
+    submitRoomType = event => {
         event.preventDefault();
 
-        const book = {
-            title: this.state.title,
-            author: this.state.author,
-            coverPhotoURL: this.state.coverPhotoURL,
-            isbnNumber: this.state.isbnNumber,
+        const roomType = {
+            titleRoomType: this.state.titleRoomType,
+            slug: this.state.slug,
+            type: this.state.type,
+            size: this.state.size,
+            amount: this.state.amount,
+            capacity: this.state.capacity,
+            pets: this.state.pets,
+            breakfast: this.state.breakfast,
             price: this.state.price,
-            language: this.state.language,
-            genre: this.state.genre
+            featured: this.state.featured,
+            description: this.state.description,
+            coverPhotoURL: this.state.coverPhotoURL
         };
 
-        this.props.saveBook(book);
+        this.props.saveRoomType(roomType);
         setTimeout(() => {
-            if(this.props.savedBookObject.book != null) {
+            if(this.props.savedRoomTypeObject.roomType != null) {
                 this.setState({"show":true, "method":"post"});
                 setTimeout(() => this.setState({"show":false}), 3000);
             } else {
@@ -110,22 +106,26 @@ class Booknow extends Component {
         this.setState(this.initialState);
     };
 
-    updateBook = event => {
+    updateRoomType = event => {
         event.preventDefault();
 
-        const book = {
-            id: this.state.id,
-            title: this.state.title,
-            author: this.state.author,
-            coverPhotoURL: this.state.coverPhotoURL,
-            isbnNumber: this.state.isbnNumber,
+        const roomType = {
+            titleRoomType: this.state.titleRoomType,
+            slug: this.state.slug,
+            type: this.state.type,
+            size: this.state.size,
+            amount: this.state.amount,
+            capacity: this.state.capacity,
+            pets: this.state.pets,
+            breakfast: this.state.breakfast,
             price: this.state.price,
-            language: this.state.language,
-            genre: this.state.genre
+            featured: this.state.featured,
+            description: this.state.description,
+            coverPhotoURL: this.state.coverPhotoURL
         };
-        this.props.updateBook(book);
+        this.props.updateRoomType(roomType);
         setTimeout(() => {
-            if(this.props.updatedBookObject.book != null) {
+            if(this.props.updatedRoomTypeObject.roomType != null) {
                 this.setState({"show":true, "method":"put"});
                 setTimeout(() => this.setState({"show":false}), 3000);
             } else {
@@ -135,19 +135,18 @@ class Booknow extends Component {
         this.setState(this.initialState);
     };
 
-    bookChange = event => {
+    roomTypeChange = event => {
         this.setState({
             [event.target.name]:event.target.value
         });
     };
 
-    bookList = () => {
+    roomTypeList = () => {
         return this.props.history.push("/admin");
     };
 
     render() {
-        const {title, author, coverPhotoURL, isbnNumber, price, language, genre} = this.state;
-
+        const {titleRoomType, slug,type,size, capacity,pets,breakfast,featured,description, coverPhotoURL, price} = this.state;
         return (
             <div className="bg-gra-01">
          <div className="container my-0">
@@ -160,33 +159,40 @@ class Booknow extends Component {
                          <div className="col-md-6 col-12 my-auto">
                              <img src={this.state.coverPhotoURL} className="img-fluid" alt="selected room" />
                          </div>
-                         {/* <div className="col-md-6 col-12 my-auto">
+                         <div className="col-md-6 col-12 my-auto">
                              <h1>Rooms Details</h1>
                              <table className="table">
                                  <thead className="thead-light">
                                      <tr>
                                          <th>Room Type</th>
-                                         <td>{name}</td>
+                                         <td>{this.state.titleRoomType}</td>
                                      </tr>
                                      <tr>
                                          <th>Capacity</th>
-                                         <td>{capacity}</td>
+                                         {/* <td>{capacity}</td> */}
+                                        <td>{this.state.capacity}</td>
                                      </tr>
                                      <tr>
                                          <th>Size</th>
-                                         <td>{size} sqft.</td>
+                                         {/* <td>{size} sqft.</td> */}
+                                         <td>{this.state.size} sqft.</td>
+                                     </tr>
+                                     <tr>
+                                         <th>Amount</th>
+                                         {/* <td>{size} sqft.</td> */}
+                                         <td>{this.state.amount} </td>
                                      </tr>
                                      <tr>
                                          <th>Breakfast</th>
-                                         <td>{breakfast === true ? `Included`: `Not Included`}</td>
+                                         {/* <td>{breakfast === true ? `Included`: `Not Included`}</td> */}
                                      </tr>
                                      <tr>
                                          <th>Pets</th>
-                                         <td>{pets ===true ? `Allowed` : `Not Allowed`}</td>
+                                         {/* <td>{pets ===true ? `Allowed` : `Not Allowed`}</td> */}
                                      </tr>
                                  </thead>
                              </table>
-                         </div> */}
+                         </div>
                      </div>
                      {/* <div className="row my-3">
                          <div className="col-md-6 col-12">
@@ -253,17 +259,17 @@ class Booknow extends Component {
 
 const mapStateToProps = state => {
     return {
-        savedBookObject: state.book,
-        bookObject: state.book,
-        updatedBookObject: state.book
+        savedRoomTypeObject: state.roomType,
+        roomTypeObject: state.roomType,
+        updatedRoomTypeObject: state.roomType
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        saveBook: (book) => dispatch(saveBook(book)),
-        fetchBook: (bookId) => dispatch(fetchBook(bookId)),
-        updateBook: (book) => dispatch(updateBook(book))
+        saveRoomType: (roomType) => dispatch(saveRoomType(roomType)),
+        fetchRoomType: (roomTypeId) => dispatch(fetchRoomType(roomTypeId)),
+        updateRoomType: (roomType) => dispatch(updateRoomType(roomType))
     };
 };
 

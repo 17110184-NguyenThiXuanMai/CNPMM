@@ -1,7 +1,7 @@
 import React, {Component } from 'react';
 
 import {connect} from 'react-redux';
-import {saveBook, fetchBook, updateBook} from '../../services/index';
+import {saveRoomType, fetchRoomType, updateRoomType} from '../../services/index';
 
 import Banner from '../../components/HomePages/Banner';
 import defaultBcg from '../../images/room-1.jpeg'
@@ -15,95 +15,107 @@ class SingleRoom extends Component {
         super(props);
         this.state = this.initialState;
         this.state = {
-            genres: [],
-            languages : [],
+            // genres: [],
+            // languages : [],
+            type: [],
             show : false,
             defaultBcg
         };
-        this.bookChange = this.bookChange.bind(this);
-        this.submitBook = this.submitBook.bind(this);
+        this.roomTypeChange = this.roomTypeChange.bind(this);
+        this.submitRoomType = this.submitRoomType.bind(this);
     }  
 
     initialState = {
-        id:'', title:'', author:'', coverPhotoURL:'', isbnNumber:'', price:'', language:'', genre:''
+        id:'', titleRoomType:'', slug:'',type:'',size:'',amount:'', capacity:'',pets:'',breakfast:'',featured:'',description:'', coverPhotoURL:'', price:''
     };
     static contextType = RoomContext;
 
     componentDidMount() {
-        const bookId = +this.props.match.params.id;
-        if(bookId) {
-            this.findBookById(bookId);
+        const roomTypeId = +this.props.match.params.id;
+        if(roomTypeId) {
+            this.findRoomTypeById(roomTypeId);
         }
-        this.findAllLanguages();
-        this.findAllGenres();
+        this.findAllTypes();
+        // this.findAllLanguages();
+        // this.findAllGenres();
     }
 
-    findAllLanguages = () => {
-        axios.get("http://localhost:8080/api/test/books/languages")
+    findAllTypes = () => {
+        axios.get("http://localhost:8080/api/test/roomtypes/types")
             .then(response => response.data)
             .then((data) => {
                 this.setState({
-                    languages: [{value:'', display:'Select Language'}]
-                        .concat(data.map(language => {
-                            return {value:language, display:language}
+                    types: [{value:'', display:'Select Type'}]
+                        .concat(data.map(type => {
+                            return {value:type, display:type}
                         }))
                 });
             });
     };
 
-    findAllGenres = () => {
-        axios.get("http://localhost:8080/api/test/books/genres")
-            .then(response => response.data)
-            .then((data) => {
-                this.setState({
-                    genres: [{value:'', display:'Select Genre'}]
-                        .concat(data.map(genre => {
-                            return {value:genre, display:genre}
-                        }))
-                });
-            });
-    };
+    // findAllGenres = () => {
+    //     axios.get("http://localhost:8080/api/test/books/genres")
+    //         .then(response => response.data)
+    //         .then((data) => {
+    //             this.setState({
+    //                 genres: [{value:'', display:'Select Genre'}]
+    //                     .concat(data.map(genre => {
+    //                         return {value:genre, display:genre}
+    //                     }))
+    //             });
+    //         });
+    // };
 
-    findBookById = (bookId) => {
-        this.props.fetchBook(bookId);
+    findRoomTypeById = (roomTypeId) => {
+        this.props.fetchRoomType(roomTypeId);
         setTimeout(() => {
-            let book = this.props.bookObject.book;
-            if(book != null) {
+            let roomType = this.props.roomTypeObject.roomType;
+            if(roomType != null) {
                 this.setState({
-                    id: book.id,
-                    title: book.title,
-                    author: book.author,
-                    coverPhotoURL: book.coverPhotoURL,
-                    isbnNumber: book.isbnNumber,
-                    price: book.price,
-                    language: book.language,
-                    genre: book.genre
+                    id: roomType.id,
+                    titleRoomType: roomType.titleRoomType,
+                    slug: roomType.slug,
+                    type: roomType.type,
+                    size: roomType.size,
+                    amount: roomType.amount,
+                    capacity: roomType.capacity,
+                    pets: roomType.pets,
+                    breakfast: roomType.breakfast,
+                    featured: roomType.featured,
+                    description: roomType.description,
+                    coverPhotoURL: roomType.coverPhotoURL,
+                    price: roomType.price
                 });
             }
         }, 1000);
     };
 
-    resetBook = () => {
+    resetRoomType = () => {
         this.setState(() => this.initialState);
     };
 
 
-    submitBook = event => {
+    submitRoomType = event => {
         event.preventDefault();
 
-        const book = {
-            title: this.state.title,
-            author: this.state.author,
-            coverPhotoURL: this.state.coverPhotoURL,
-            isbnNumber: this.state.isbnNumber,
+        const roomType = {
+            titleRoomType: this.state.titleRoomType,
+            slug: this.state.slug,
+            type: this.state.type,
+            size: this.state.size,
+            amount: this.state.amount,
+            capacity: this.state.capacity,
+            pets: this.state.pets,
+            breakfast: this.state.breakfast,
             price: this.state.price,
-            language: this.state.language,
-            genre: this.state.genre
+            featured: this.state.featured,
+            description: this.state.description,
+            coverPhotoURL: this.state.coverPhotoURL
         };
 
-        this.props.saveBook(book);
+        this.props.saveRoomType(roomType);
         setTimeout(() => {
-            if(this.props.savedBookObject.book != null) {
+            if(this.props.savedRoomTypeObject.roomType != null) {
                 this.setState({"show":true, "method":"post"});
                 setTimeout(() => this.setState({"show":false}), 3000);
             } else {
@@ -114,22 +126,26 @@ class SingleRoom extends Component {
         this.setState(this.initialState);
     };
 
-    updateBook = event => {
+    updateRoomType = event => {
         event.preventDefault();
 
-        const book = {
-            id: this.state.id,
-            title: this.state.title,
-            author: this.state.author,
-            coverPhotoURL: this.state.coverPhotoURL,
-            isbnNumber: this.state.isbnNumber,
+        const roomType = {
+            titleRoomType: this.state.titleRoomType,
+            slug: this.state.slug,
+            type: this.state.type,
+            size: this.state.size,
+            amount: this.state.amount,
+            capacity: this.state.capacity,
+            pets: this.state.pets,
+            breakfast: this.state.breakfast,
             price: this.state.price,
-            language: this.state.language,
-            genre: this.state.genre
+            featured: this.state.featured,
+            description: this.state.description,
+            coverPhotoURL: this.state.coverPhotoURL
         };
-        this.props.updateBook(book);
+        this.props.updateRoomType(roomType);
         setTimeout(() => {
-            if(this.props.updatedBookObject.book != null) {
+            if(this.props.updatedRoomTypeObject.roomType != null) {
                 this.setState({"show":true, "method":"put"});
                 setTimeout(() => this.setState({"show":false}), 3000);
             } else {
@@ -139,23 +155,23 @@ class SingleRoom extends Component {
         this.setState(this.initialState);
     };
 
-    bookChange = event => {
+    roomTypeChange = event => {
         this.setState({
             [event.target.name]:event.target.value
         });
     };
 
-    bookList = () => {
+    roomTypeList = () => {
         return this.props.history.push("/admin");
     };
 
     render() {
-        const {title, author, coverPhotoURL, isbnNumber, price, language, genre} = this.state;
+        const {titleRoomType, slug,type,size,amount, capacity,pets,breakfast,featured,description, coverPhotoURL, price} = this.state;
 
         return (
             <div>
                   <StyledHero img={this.state.coverPhotoURL}>
-                     <Banner title={`${this.state.title} room`}>
+                     <Banner title={`${this.state.titleRoomType} room`}>
                          <Link to="/rooms" className="btn-primary">
                              back to rooms
                          </Link> 
@@ -170,17 +186,18 @@ class SingleRoom extends Component {
                     <div className="single-room-info">
                         <article className="desc">
                             <h3>details</h3>
-                            <p>{this.state.author}</p>
+                            <p>{this.state.description}</p>
                         </article>
                         <article className="info">
                             <h3>info</h3>
                             <h6>price : ${this.state.price}  </h6>
-                            <h6>size : ${this.state.price} SQFT</h6>
-                            {/* <h6>
+                            <h6>size : ${this.state.size} SQFT</h6>
+                            <h6>Amount: ${this.state.amount}</h6>
+                            <h6>
                                 max capacity : {
-                                    this.state.isbnNumber > 1 ? `${this.state.isbnNumber} people` : 
-                                    `${this.state.isbnNumber} person `}
-                            </h6> */}
+                                    this.state.capacity > 1 ? `${this.state.capacity} people` : 
+                                    `${this.state.capacity} person `}
+                            </h6>
 
                                 {/* <h6> {pets?"pets allowed":"no pets allowed"}</h6>
                                 <h6>{breakfast && "free breakfast included"}</h6> */}
@@ -209,17 +226,17 @@ class SingleRoom extends Component {
 
 const mapStateToProps = state => {
     return {
-        savedBookObject: state.book,
-        bookObject: state.book,
-        updatedBookObject: state.book
+        savedRoomTypeObject: state.roomType,
+        roomTypeObject: state.roomType,
+        updatedRoomTypeObject: state.roomType
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        saveBook: (book) => dispatch(saveBook(book)),
-        fetchBook: (bookId) => dispatch(fetchBook(bookId)),
-        updateBook: (book) => dispatch(updateBook(book))
+        saveRoomType: (roomType) => dispatch(saveRoomType(roomType)),
+        fetchRoomType: (roomTypeId) => dispatch(fetchRoomType(roomTypeId)),
+        updateRoomType: (roomType) => dispatch(updateRoomType(roomType))
     };
 };
 

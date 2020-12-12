@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom';
 import AdminSidebar from '../components/Admin/AdminSidebar'
 import AdminHeader from '../components/Admin/AdminHeader'
-import Book from './Admin/Book';
-import BookList from './Admin/BookList';
+import RoomType from './Admin/RoomType';
+import RoomTypeList from './Admin/RoomTypeList';
 import { Provider } from 'react-redux';
 import store from '../services/store';
 
@@ -22,9 +22,9 @@ export default class Admin extends Component {
                   </Switch> */}
                     <Switch>                     
                         <Provider store={store}>
-                            <Route path="/admin" exact component={BookList} />
-                            <Route path="/admin/add" exact component={Book} />
-                            <Route path="/admin/edit/:id" exact component={Book} />                    
+                            <Route path="/admin" exact component={RoomTypeList} />
+                            <Route path="/admin/add" exact component={RoomType} />
+                            <Route path="/admin/edit/:id" exact component={RoomType} />                    
                         </Provider>
                     </Switch>
                 </div>

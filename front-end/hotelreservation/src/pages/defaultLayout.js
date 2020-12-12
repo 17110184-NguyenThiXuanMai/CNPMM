@@ -13,10 +13,8 @@ import SingleRoom from './HomePages/SingleRoom';
 import Error from './HomePages/Error';
 import Booknow from './HomePages/Booknow';
 import Footer from '../components/HomePages/Footer';
-import BookList from './Admin/BookList';
 import { Provider } from 'react-redux';
 import store from '../services/store';
-import FeaturedRooms from '../components/HomePages/FeaturedRooms';
 
 export default class DefaultLayout extends Component {
     constructor(props) {
@@ -63,7 +61,6 @@ export default class DefaultLayout extends Component {
                 <Route component={Error} />
               </Switch>
             <Footer />
-
           </div>
         );
       }

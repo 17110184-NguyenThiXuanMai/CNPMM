@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import { deleteBook } from '../../services/index';
+import { deleteRoomType } from '../../services/index';
 
 import './../../css/Style.css';
 import { Card, Table, Image, ButtonGroup, Button, InputGroup, FormControl } from 'react-bootstrap';
@@ -13,10 +13,10 @@ class Room extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            books: [],
+            roomTypes: [],
             search: '',
             currentPage: 1,
-            booksPerPage: 5,
+            roomTypesPerPage: 5,
             sortDir: "asc"
         };
     }
@@ -24,12 +24,12 @@ class Room extends Component {
     sortData = () => {
         setTimeout(() => {
             this.state.sortDir === "asc" ? this.setState({ sortDir: "desc" }) : this.setState({ sortDir: "asc" });
-            this.findAllBooks(this.state.currentPage);
+            this.findAllRoomTypes(this.state.currentPage);
         }, 500);
     };
 
     componentDidMount() {
-        this.findAllBooks(this.state.currentPage);
+        this.findAllRoomTypes(this.state.currentPage);
     }
 
     /*findAllBooks() {
@@ -40,13 +40,13 @@ class Room extends Component {
             });
     };*/
 
-    findAllBooks(currentPage) {
+    findAllRoomTypes(currentPage) {
         currentPage -= 1;
-        axios.get("http://localhost:8080/api/test/books?pageNumber=" + currentPage + "&pageSize=" + this.state.booksPerPage + "&sortBy=price&sortDir=" + this.state.sortDir)
+        axios.get("http://localhost:8080/api/test/roomtypes?pageNumber=" + currentPage + "&pageSize=" + this.state.roomTypesPerPage + "&sortBy=price&sortDir=" + this.state.sortDir)
             .then(response => response.data)
             .then((data) => {
                 this.setState({
-                    books: data.content,
+                    roomTypes: data.content,
                     totalPages: data.totalPages,
                     totalElements: data.totalElements,
                     currentPage: data.number + 1
@@ -72,13 +72,13 @@ class Room extends Component {
         });
     };*/
 
-    deleteBook = (bookId) => {
-        this.props.deleteBook(bookId);
+    deleteRoomType = (roomTypeId) => {
+        this.props.deleteRoomType(roomTypeId);
         setTimeout(() => {
-            if (this.props.bookObject != null) {
+            if (this.props.roomTypeObject != null) {
                 this.setState({ "show": true });
                 setTimeout(() => this.setState({ "show": false }), 3000);
-                this.findAllBooks(this.state.currentPage);
+                this.findAllRoomTypes(this.state.currentPage);
             } else {
                 this.setState({ "show": false });
             }
@@ -99,11 +99,11 @@ class Room extends Component {
 
     searchData = (currentPage) => {
         currentPage -= 1;
-        axios.get("http://localhost:8080/api/test/books/search/" + this.state.search + "?page=" + currentPage + "&size=" + this.state.booksPerPage)
+        axios.get("http://localhost:8080/api/test/roomtypes/search/" + this.state.search + "?page=" + currentPage + "&size=" + this.state.roomTypesPerPage)
             .then(response => response.data)
             .then((data) => {
                 this.setState({
-                    books: data.content,
+                    roomTypes: data.content,
                     totalPages: data.totalPages,
                     totalElements: data.totalElements,
                     currentPage: data.number + 1
@@ -112,20 +112,20 @@ class Room extends Component {
     };
 
     render() {
-        const { books } = this.state;
+        const { roomTypes } = this.state;
 
         return (
-            books.map((book) => (
+            roomTypes.map((roomType) => (
                 <article className="room">
                     <div className="img-container">
-                        <Image src={book.coverPhotoURL} r alt="single room" />
+                        <Image src={roomType.coverPhotoURL} r alt="single room" />
                         <div className="price-top">
-                            <h6>${book.price}</h6>
+                            <h6>${roomType.price}</h6>
                             <p>per night</p>
                         </div>
-                        <Link to={`/rooms/` + book.id} className="btn-primary room-link">Features</Link>
+                        <Link to={`/rooms/` + roomType.id} className="btn-primary room-link">Features</Link>
                     </div>
-                    <p className="room-info">{book.title}</p>
+                    <p className="room-info">{roomType.title}</p>
                 </article>
             ))
         );
@@ -134,13 +134,13 @@ class Room extends Component {
 
 const mapStateToProps = state => {
     return {
-        bookObject: state.book
+        roomTypeObject: state.roomType
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        deleteBook: (bookId) => dispatch(deleteBook(bookId))
+        deleteRoomType: (roomTypeId) => dispatch(deleteRoomType(roomTypeId))
     };
 };
 
