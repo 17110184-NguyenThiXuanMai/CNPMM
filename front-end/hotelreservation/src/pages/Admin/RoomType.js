@@ -16,6 +16,9 @@ class RoomType extends Component {
             // genres: [],
             // languages : [],
             types: [],
+            pets: false,
+            breakfast: false,
+            featured: false,
             show : false
         };
         this.roomTypeChange = this.roomTypeChange.bind(this);
@@ -23,14 +26,14 @@ class RoomType extends Component {
     }  
 
     initialState = {
-        id:'', titleRoomType:'', slug:'',type:'',size:'', amount:'', capacity:'',description:'', coverPhotoURL:'', price:''
+        id:'', titleRoomType:'', slug:'',type:'',size:'',pets:'',breakfast:'',featured:'', amount:'', capacity:'',description:'', coverPhotoURL:'', price:''
     };
-    // pets:'',breakfast:'',featured:'',
+    
 
     componentDidMount() {
         const roomTypeId = +this.props.match.params.id;
         if(roomTypeId) {
-            this.findroomTypeById(roomTypeId);
+            this.findRoomTypeById(roomTypeId);
         }
         this.findAllTypes();
         // this.findAllGenres();
@@ -97,9 +100,9 @@ class RoomType extends Component {
                     size: roomType.size,
                     amount: roomType.amount,
                     capacity: roomType.capacity,
-                    // pets: roomType.pets,
-                    // breakfast: roomType.breakfast,
-                    // featured: roomType.featured,
+                    pets: roomType.pets,
+                    breakfast: roomType.breakfast,
+                    featured: roomType.featured,
                     description: roomType.description,
                     coverPhotoURL: roomType.coverPhotoURL,
                     price: roomType.price
@@ -172,9 +175,9 @@ class RoomType extends Component {
             size: this.state.size,
             amount: this.state.amount,
             capacity: this.state.capacity,
-            // pets: this.state.pets,
-            // breakfast: this.state.breakfast,
-            // featured: this.state.featured,
+            pets: this.state.pets,
+            breakfast: this.state.breakfast,
+            featured: this.state.featured,
             price: this.state.price,
             description: this.state.description,
             coverPhotoURL: this.state.coverPhotoURL
@@ -247,9 +250,9 @@ class RoomType extends Component {
             size: this.state.size,
             amount: this.state.amount,
             capacity: this.state.capacity,
-            // pets: this.state.pets,
-            // breakfast: this.state.breakfast,
-            // featured: this.state.featured,
+            pets: this.state.pets,
+            breakfast: this.state.breakfast,
+            featured: this.state.featured,
             price: this.state.price,
             description: this.state.description,
             coverPhotoURL: this.state.coverPhotoURL
@@ -282,13 +285,25 @@ class RoomType extends Component {
         });
     };
 
+    handleCheckPets = event => {
+        this.setState({pets: event.target.checked});
+    }
+
+    handleCheckBreakfast = event => {
+        this.setState({breakfast: event.target.checked});
+    }
+
+    handleCheckFeatured = event => {
+        this.setState({featured: event.target.checked});
+    }
+
     roomTypeList = () => {
         return this.props.history.push("/admin");
     };
 
     render() {
-        const {titleRoomType, slug,type,size,amount, capacity,description, coverPhotoURL, price} = this.state;
-        // pets,breakfast,featured,
+        const {titleRoomType, slug,type,size,amount,pets,breakfast,featured, capacity,description, coverPhotoURL, price} = this.state;
+        
         return (
             <div className="container">
                 <div style={{"display":this.state.show ? "block" : "none"}}>
@@ -393,29 +408,31 @@ class RoomType extends Component {
                                         placeholder="Enter Description" />
                                 </Form.Group>
                             </Form.Row>
-                       {/*     <Form.Row>
-                            <Form.Check as={Col}>
-                                    <Form.Label>Pets</Form.Label>
-                                    <Form.InputGroup type="checkbox" className={"bg-dark"} 
-                                    controlId="formGridPets" name="pets" onChange={this.roomTypeChange} 
-                                    autoComplete="off" value={pets}>
-                                    </Form.InputGroup>
-                                </Form.Check>
-                                <Form.Check as={Col}>
-                                    <Form.Label>Breakfast</Form.Label>
-                                    <Form.InputGroup type="checkbox" className={"bg-dark"} 
-                                    controlId="formGridBreakfast" name="breakfast" onChange={this.roomTypeChange} 
-                                    autoComplete="off" value={breakfast}>
-                                    </Form.InputGroup>
-                                </Form.Check>
-                                <Form.Check as={Col}>
-                                    <Form.Label>Featured</Form.Label>
-                                    <Form.InputGroup type="checkbox" className={"bg-dark"} 
-                                    controlId="formGridFeatured" name="featured" onChange={this.roomTypeChange} 
-                                    autoComplete="off" value={featured}>
-                                    </Form.InputGroup>
-                                </Form.Check>                               
-                            </Form.Row>                           */}
+                           <Form.Row>
+                                <div className="form-group form-check">
+                                    <label className="checkbox-inline" for="pets">
+                                        <input type="checkbox" className="form-check-input"
+                                            value={this.state.pets}
+                                            onChange={this.handleCheckPets}
+                                            checked={this.state.pets}
+                                            name="pets" />
+                                    Pets </label>
+                                    <label className="checkbox-inline" for="breakfast">
+                                        <input type="checkbox" className="form-check-input" 
+                                            value={this.state.breakfast}
+                                            onChange={this.handleCheckBreakfast}
+                                            checked={this.state.breakfast}                           
+                                            name="breakfast" />
+                                        Breakfast </label>
+                                        <label className="checkbox-inline" for="featured">
+                                        <input type="checkbox" className="form-check-input"
+                                            value={this.state.featured}
+                                            onChange={this.handleCheckFeatured}
+                                            checked={this.state.featured}
+                                            name="featured" />
+                                        Featured</label>
+                                    </div>
+                            </Form.Row>                          
                         </Card.Body>
                         <Card.Footer style={{"textAlign":"right"}}>
                             <Row>

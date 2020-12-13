@@ -192,15 +192,15 @@ class SingleRoom extends Component {
                             <h3>info</h3>
                             <h6>price : ${this.state.price}  </h6>
                             <h6>size : ${this.state.size} SQFT</h6>
-                            <h6>Amount: ${this.state.amount}</h6>
+                            <h6>Amount: {this.state.amount} room</h6>
+                            <h6>Type: {this.state.type} </h6>
                             <h6>
                                 max capacity : {
                                     this.state.capacity > 1 ? `${this.state.capacity} people` : 
                                     `${this.state.capacity} person `}
                             </h6>
-
-                                {/* <h6> {pets?"pets allowed":"no pets allowed"}</h6>
-                                <h6>{breakfast && "free breakfast included"}</h6> */}
+                                <h6> {this.state.pets? "pets allowed":"no pets allowed"}</h6>
+                                <h6>{this.state.breakfast && "free breakfast included"}</h6>
                         </article>
                     </div>
                 </section>

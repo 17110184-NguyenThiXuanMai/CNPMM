@@ -19,7 +19,8 @@ class RoomTypeList extends Component {
             search : '',
             currentPage : 1,
             roomTypesPerPage : 5,
-            sortDir: "asc"
+            sortDir: "asc",
+            
         };
     }
 
@@ -183,6 +184,23 @@ class RoomTypeList extends Component {
         return this.props.history.push("/admin/add");
     };
 
+    
+    checkRoomType = (Code) => {
+        if (Code === true) {
+            return (
+                <td className="text-center">
+                    <div>True</div>
+                </td>
+            );
+        } else {
+            return (
+                <td className="text-center">
+                    <div>False</div>
+                </td>
+            );
+        }
+    };
+
     render() {
         const {roomTypes, currentPage, totalPages, search} = this.state;
 
@@ -226,9 +244,9 @@ class RoomTypeList extends Component {
                                   <th>Amount</th>
                                   <th>Capacity</th>
                                   <th>Description</th>
-                                  {/* <th>Pets</th>
+                                  <th>Pets</th>
                                   <th>Breakfast</th>
-                                  <th>Featured</th> */}
+                                  <th>Featured</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -249,9 +267,9 @@ class RoomTypeList extends Component {
                                         <td>{roomType.amount}</td>
                                         <td>{roomType.capacity}</td>
                                         <td>{roomType.description}</td>
-                                        {/* <td>{roomType.pets}</td>
-                                        <td>{roomType.breakfast}</td>
-                                        <td>{roomType.featured}</td> */}
+                                        <td> {this.checkRoomType(roomType.pets)}</td>
+                                        <td> {this.checkRoomType(roomType.breakfast)}</td>
+                                        <td> {this.checkRoomType(roomType.featured)}</td>
                                         <td>
                                             <ButtonGroup>
                                                 <Link to={"admin/edit/"+roomType.id} className="btn btn-sm btn-outline-primary"><BsPencilSquare /></Link>{' '}
