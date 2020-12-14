@@ -558,3 +558,24 @@
     }
   }
   /* end of rooms fitler*/
+
+/* aboutus */
+
+.aboutus,.contact{
+  margin-top: 100px!important;
+}
+.about_company,.team{
+  padding: 60px 30px;
+}
+.about_info{
+  letter-spacing: 40;
+}
+.carousel-inner{
+  min-height: 400px!important;
+  max-height: 400px!important;
+}
+.connect{
+  font-size: 44px!important;
+  padding: 5px 8px;
+}
+/* end of about us */

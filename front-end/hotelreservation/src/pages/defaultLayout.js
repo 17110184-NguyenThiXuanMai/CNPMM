@@ -12,9 +12,11 @@ import Rooms from './HomePages/Rooms';
 import SingleRoom from './HomePages/SingleRoom';
 import Error from './HomePages/Error';
 import Booknow from './HomePages/Booknow';
+import About from './HomePages/About';
 import Footer from '../components/HomePages/Footer';
 import { Provider } from 'react-redux';
 import store from '../services/store';
+import Contact from './HomePages/Contact';
 
 export default class DefaultLayout extends Component {
     constructor(props) {
@@ -52,7 +54,9 @@ export default class DefaultLayout extends Component {
                 <Route exact path={["/", "/home"]} component={Home} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/register" component={Register} />
-                <Route exact path="/profile" component={Profile} />              
+                <Route exact path="/profile" component={Profile} />         
+                <Route exact path="/about" component={About} />  
+                <Route exact path="/contact" component={Contact} />  
                 <Provider store={store}>
                 <Route exact path="/rooms/" component={Rooms} />
                   <Route exact path="/rooms/:id" component={SingleRoom} />   

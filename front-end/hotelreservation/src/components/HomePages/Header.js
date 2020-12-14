@@ -61,6 +61,9 @@ export default class Header extends Component {
                         <NavLink className="nav-link font-weight-bolder" activeClassName="active_class" exact to="/rooms">Rooms</NavLink>
                     </li>
                     <li className="nav-item">
+                        <NavLink className="nav-link font-weight-bolder" activeClassName="active_class" exact to="/policy">Policy</NavLink>
+                    </li>
+                    <li className="nav-item">
                         <NavLink className="nav-link font-weight-bolder" activeClassName="active_class" exact to="/about">About</NavLink>
                     </li>
                     <li className="nav-item">

@@ -55,9 +55,9 @@ render() {
                     <li>
                         <Link to="/">Home</Link>
                     </li>
-                    <li>
+                    {/* <li>
                         <Link to="/rooms">Room</Link>
-                    </li>
+                    </li> */}
                     {showModeratorBoard && (
                         <li>
                             <Link to={"/mod"}>
