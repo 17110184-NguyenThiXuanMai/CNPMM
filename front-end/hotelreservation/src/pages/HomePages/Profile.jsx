@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import '../../css/profile.css'
-import AuthService from "../../services/auth.service";
+import AuthService from "../../services/Login/auth.service";
 
 import {
   Button,

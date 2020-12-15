@@ -3,7 +3,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import '../../css/signin.css';
-import AuthService from "../../services/auth.service";
+import AuthService from "../../services/Login/auth.service";
 import '../../css/main.css';
 import '../../css/util.css';
 import {BsFillPersonFill, BsArrowRight, BsFillLockFill} from "react-icons/bs"

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Title from './Title.js';
+import Title from './Title';
 import { FaCocktail,FaHiking,FaShuttleVan, FaBeer } from "react-icons/fa";
 
-export default class Services extends Component {
+class Services extends Component {
     state={
         services: [
             {
@@ -37,10 +37,15 @@ export default class Services extends Component {
                             <span>{item.icon}</span>
                             <h6>{item.title}</h6>
                             <p>{item.info}</p>
+                            {/* <button>See more</button> */}
                         </article>
+                        
                     })}
                 </div>
+               
             </section>
         );
     }
 }
+
+export default Services;

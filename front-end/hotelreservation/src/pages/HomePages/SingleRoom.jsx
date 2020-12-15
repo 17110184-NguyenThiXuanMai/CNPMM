@@ -26,7 +26,7 @@ class SingleRoom extends Component {
     }  
 
     initialState = {
-        id:'', titleRoomType:'', slug:'',type:'',size:'',amount:'', capacity:'',pets:'',breakfast:'',featured:'',description:'', coverPhotoURL:'', price:''
+        id:'', titleRoomType:'', slug:'',type:'',size:'',amount:'', capacity:'',pets:'',breakfast:'',television:'', bath:'',description:'', coverPhotoURL:'', price:''
     };
     static contextType = RoomContext;
 
@@ -81,7 +81,8 @@ class SingleRoom extends Component {
                     capacity: roomType.capacity,
                     pets: roomType.pets,
                     breakfast: roomType.breakfast,
-                    featured: roomType.featured,
+                    television: roomType.television,
+                    bath: roomType.bath,
                     description: roomType.description,
                     coverPhotoURL: roomType.coverPhotoURL,
                     price: roomType.price
@@ -108,7 +109,8 @@ class SingleRoom extends Component {
             pets: this.state.pets,
             breakfast: this.state.breakfast,
             price: this.state.price,
-            featured: this.state.featured,
+            television: this.state.television,
+            bath: this.state.bath,
             description: this.state.description,
             coverPhotoURL: this.state.coverPhotoURL
         };
@@ -139,7 +141,8 @@ class SingleRoom extends Component {
             pets: this.state.pets,
             breakfast: this.state.breakfast,
             price: this.state.price,
-            featured: this.state.featured,
+            television: this.state.television,
+            bath: this.state.bath,
             description: this.state.description,
             coverPhotoURL: this.state.coverPhotoURL
         };
@@ -166,7 +169,7 @@ class SingleRoom extends Component {
     };
 
     render() {
-        const {titleRoomType, slug,type,size,amount, capacity,pets,breakfast,featured,description, coverPhotoURL, price} = this.state;
+        const {titleRoomType, slug,type,size,amount, capacity,pets,breakfast,television, bath,description, coverPhotoURL, price} = this.state;
 
         return (
             <div>
@@ -201,6 +204,8 @@ class SingleRoom extends Component {
                             </h6>
                                 <h6> {this.state.pets? "pets allowed":"no pets allowed"}</h6>
                                 <h6>{this.state.breakfast && "free breakfast included"}</h6>
+                                <h6>{this.state.television && "television included"}</h6>
+                                <h6>{this.state.bath && "bath included"}</h6>
                         </article>
                     </div>
                 </section>

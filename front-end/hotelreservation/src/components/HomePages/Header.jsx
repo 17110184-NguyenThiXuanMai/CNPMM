@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { FaAlignRight } from 'react-icons/fa'
 import { Link, NavLink } from 'react-router-dom'
-import AuthService from "../../services/auth.service";
+import AuthService from "../../services/Login/auth.service";
 import jquery from 'jquery';
 
 // for changing navbar  color

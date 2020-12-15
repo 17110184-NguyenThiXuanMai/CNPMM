@@ -1,0 +1,273 @@
+/* line 2, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_dining.scss */
+.dining-area .single-dining-area {
+  position: relative;
+  padding: 150px 0;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  /* line 2, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_dining.scss */
+  .dining-area .single-dining-area {
+    padding: 10px 0;
+  }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  /* line 2, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_dining.scss */
+  .dining-area .single-dining-area {
+    padding: 10px 0;
+  }
+}
+
+@media (max-width: 767px) {
+  /* line 2, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_dining.scss */
+  .dining-area .single-dining-area {
+    padding: 10px 0;
+  }
+}
+
+/* line 14, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_dining.scss */
+.dining-area .single-dining-area.left-img {
+  position: relative;
+}
+
+/* line 16, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_dining.scss */
+.dining-area .single-dining-area.left-img::before {
+  position: absolute;
+  left: 0;
+  content: "";
+  top: 0;
+  bottom: 0;
+  background-image: url(../images/restaurant/dining-img.jpg);
+  width: 50%;
+  border-radius: 0 5px 0 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 767px) {
+  /* line 16, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_dining.scss */
+  .dining-area .single-dining-area.left-img::before {
+    display: none;
+  }
+}
+
+/* line 32, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_dining.scss */
+.dining-area .single-dining-area.right-img {
+  position: relative;
+}
+
+/* line 34, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_dining.scss */
+.dining-area .single-dining-area.right-img::before {
+  position: absolute;
+  right: 0;
+  content: "";
+  top: 0;
+  bottom: 0;
+  background-image: url(../images/restaurant/dining-img2.jpg);
+  width: 50%;
+  border-radius: 0 0 0 5px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media (max-width: 767px) {
+  /* line 34, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_dining.scss */
+  .dining-area .single-dining-area.right-img::before {
+    display: none;
+  }
+}
+
+/* line 52, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_dining.scss */
+.dining-area .dining-caption {
+  background: rgba(252, 252, 252, 0.95);
+  padding: 92px 98px 98px 96px;
+  border-radius: 5px;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  /* line 52, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_dining.scss */
+  .dining-area .dining-caption {
+    padding: 60px 69px 68px 61px;
+  }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  /* line 52, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_dining.scss */
+  .dining-area .dining-caption {
+    padding: 57px 59px 65px 79px;
+  }
+}
+
+@media (max-width: 767px) {
+  /* line 52, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_dining.scss */
+  .dining-area .dining-caption {
+    padding: 55px 38px 53px 29px;
+  }
+}
+
+/* line 66, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_dining.scss */
+.dining-area .dining-caption span {
+  color: #dca73a;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  display: block;
+}
+
+/* line 72, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_dining.scss */
+.dining-area .dining-caption h3 {
+  font-weight: 600;
+  color: #112e41;
+  margin-bottom: 30px;
+}
+
+/* line 77, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_dining.scss */
+.dining-area .dining-caption p {
+  margin-bottom: 56px;
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+@media (max-width: 767px) {
+  /* line 81, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_dining.scss */
+  .dining-area .dining-caption p br {
+    display: none;
+  }
+}
+
+/* line 3, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_testimonial.scss */
+.testimonial-area .testimonial-caption p {
+  font-size: 25px;
+  color: #696868;
+  line-height: 45px;
+  line-height: 1.5;
+  padding: 0 9px;
+  margin-bottom: 37px;
+}
+
+
+/* button style */
+/* line 175, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_common.scss */
+.btn {
+  -moz-user-select: none;
+  background: #dca73a;
+  border: medium none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  line-height: 0;
+  margin-bottom: 0;
+  padding: 25px 39px;
+  text-align: center;
+  text-transform: capitalize;
+  touch-action: manipulation;
+  transition: all 0.3s ease 0s;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+/* line 196, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_common.scss */
+.btn:hover {
+  background: #f1b233;
+  color: #fff;
+}
+
+/* line 201, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_common.scss */
+.border-btn {
+  background: none;
+  border: 2px solid #dca73a;
+  color: #dca73a;
+}
+
+/* line 206, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_common.scss */
+.border-btn i {
+  color: #dca73a !important;
+  position: relative;
+  left: 0;
+}
+
+/* line 211, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_common.scss */
+.view-btn1 i {
+  position: relative;
+  left: 0;
+}
+
+/* line 215, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_common.scss */
+.more-btn1 i {
+  position: relative;
+  left: 0;
+}
+
+/* line 220, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_common.scss */
+.btn.focus, .btn:focus {
+  outline: 0;
+  box-shadow: none;
+}
+
+/* line 224, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_common.scss */
+.btn:hover i {
+  left: 7px;
+}
+
+/* line 227, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_common.scss */
+.border-btn:hover i {
+  color: #fff !important;
+}
+
+/* line 230, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_common.scss */
+.border-btn:hover {
+  border: 2px solid transparent;
+}
+
+/* line 233, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_common.scss */
+.border-btn1 {
+  border: 2px solid #f5f5f5;
+  background: transparent;
+  color: #fff;
+  border-radius: 5px;
+}
+
+/* line 239, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_common.scss */
+.border-btn1:hover {
+  border: 2px solid transparent;
+  color: #ff5757;
+}
+
+/* line 243, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_common.scss */
+.read-btn1 {
+  background: #ff5757;
+  font-size: 16px;
+  padding: 12px 33px;
+}
+
+/* line 248, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_common.scss */
+.read-btn1:hover {
+  color: #ff5757;
+}
+
+/* line 251, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_common.scss */
+.read-btn2 {
+  background: #ff5757;
+  font-size: 16px;
+  padding: 12px 33px;
+  border: 2px solid transparent;
+  border-radius: 7px;
+}
+
+/* line 259, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_common.scss */
+.read-btn2:hover {
+  background: transparent;
+  border: 2px solid #ff5757;
+}
+
+/* btn-icon */
+/* line 269, C:/Users/SPN Graphics/Desktop/hotel_up/Hotel_HTML/assets/scss/_common.scss */
+.btn-icon > i {
+  margin-left: 30px;
+  font-size: 16px;
+}
+
+/* button style */

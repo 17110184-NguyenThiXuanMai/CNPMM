@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { deleteRoomType } from '../../services/index';
 
 import './../../css/Style.css';
-import { Card, Table, Image, ButtonGroup, Button, InputGroup, FormControl } from 'react-bootstrap';
+import {Image} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 

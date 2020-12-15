@@ -24,21 +24,46 @@ class AdminSidebar extends Component {
                     </li>
               
                     <li className="nav-item">
-                        <Link to="/index/rating" className="link-nav">
+                        <Link to="/admin/policy" className="link-nav">
+                            <a className="nav-link" href="index.html">
+                            <i className="fas fa-calendar"></i>
+                            <span> Policy Manager</span></a>
+                        </Link>
+                    </li>
+
+                    <li className="nav-item">
+                        <Link to="/admin/discounts" className="link-nav">
                             <a className="nav-link" href="index.html">
                             <i className="fas fa-calendar"></i>
                             <span> Discount Manager</span></a>
                         </Link>
                     </li>
+
                     <li className="nav-item">
-                        <Link to="/index/user" className="link-nav">
+                        <Link to="/admin/customers" className="link-nav">
+                            <a className="nav-link" href="index.html">
+                            <i className="fas fa-calendar"></i>
+                            <span> Customer Manager</span></a>
+                        </Link>
+                    </li>
+
+                    <li className="nav-item">
+                        <Link to="/admin/customers" className="link-nav">
+                            <a className="nav-link" href="index.html">
+                            <i className="fas fa-calendar"></i>
+                            <span> Customer Manager</span></a>
+                        </Link>
+                    </li>
+
+                    <li className="nav-item">
+                        <Link to="/admin/user" className="link-nav">
                             <a className="nav-link" href="index.html">
                             <i className="fas fa-pager"></i>
                             <span> User Manager</span></a>
                         </Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/index/myuser" className="link-nav">
+                        <Link to="/admin/myuser" className="link-nav">
                             <a className="nav-link" href="index.html">
                             <i className="fas fa-fw fa-user"></i>
                             <span> Profile</span></a>

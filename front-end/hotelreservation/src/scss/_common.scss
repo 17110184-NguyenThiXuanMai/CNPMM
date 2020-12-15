@@ -1,0 +1,103 @@
+
+
+/* button style */
+.btn {
+	-moz-user-select: none;
+	background: #dca73a;
+	border: medium none;
+	border-radius: 5px;
+	color: #fff;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 16px;
+	font-weight: 400;
+	letter-spacing: 1px;
+	line-height: 0;
+	margin-bottom: 0;
+	padding: 25px 39px;
+	text-align: center;
+	text-transform: capitalize;
+	touch-action: manipulation;
+	transition: all 0.3s ease 0s;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+.btn:hover {
+	background:#f1b233;
+	color: #fff;
+}
+
+.border-btn {
+	background: none;
+	border: 2px solid #dca73a;
+	color: #dca73a;
+}
+.border-btn i{
+	color: #dca73a !important;
+	position: relative;
+	left: 0;
+}
+.view-btn1 i{
+	position: relative;
+	left: 0;
+}
+.more-btn1 i{
+	position: relative;
+	left: 0; 
+}
+
+.btn.focus, .btn:focus {
+	outline: 0;
+ 	box-shadow:none; 
+}
+.btn:hover i{
+	left: 7px;
+}
+.border-btn:hover i{
+	color: #fff !important;
+}
+.border-btn:hover {
+	border: 2px solid transparent;
+}
+.border-btn1 {
+	border: 2px solid #f5f5f5;
+	background: transparent;
+	color: #fff;
+	border-radius: 5px;
+}
+.border-btn1:hover {
+	border: 2px solid transparent;
+	color:#ff5757 ;
+}
+.read-btn1 {
+	background: #ff5757;
+	font-size: 16px;
+	padding: 12px 33px;
+}
+.read-btn1:hover {
+	color: #ff5757;
+}
+.read-btn2 {
+	background: #ff5757;
+	font-size: 16px;
+	padding: 12px 33px;
+	border: 2px solid transparent;
+	border-radius: 7px;
+}
+
+.read-btn2:hover {
+	background: transparent;
+	border: 2px solid #ff5757;
+}
+
+
+
+
+
+/* btn-icon */
+.btn-icon>i {
+	margin-left: 30px;
+	font-size: 16px;
+}
+
+/* button style */

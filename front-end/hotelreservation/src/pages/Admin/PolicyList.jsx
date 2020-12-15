@@ -1,55 +1,46 @@
 import React, {Component} from 'react';
 
 import {connect} from 'react-redux';
-import {deleteRoomType} from '../../services/index';
+import {deletePolicy} from '../../services/index';
 
 import './../../css/Style.css';
-import {Card, Table, Image, ButtonGroup, Button, InputGroup, FormControl} from 'react-bootstrap';
+import {Card, Table,ButtonGroup, Button, InputGroup, FormControl} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import MyToast from '../../components/Admin/MyToast';
 import axios from 'axios';
 import { BsFillTrashFill, BsPencilSquare, BsSearch, BsFillXCircleFill, BsList, BsChevronBarRight, BsChevronRight, BsChevronLeft, BsChevronBarLeft} from "react-icons/bs";
 
-class RoomTypeList extends Component {
+class PolicyList extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            roomTypes : [],
+            policies : [],
             search : '',
             currentPage : 1,
-            roomTypesPerPage : 5,
+            policiesPerPage : 5,
             sortDir: "asc",
-            
         };
     }
 
     sortData = () => {
         setTimeout(() => {
             this.state.sortDir === "asc" ? this.setState({sortDir: "desc"}) : this.setState({sortDir: "asc"});
-            this.findAllRoomTypes(this.state.currentPage);
+            this.findAllPolicies(this.state.currentPage);
         }, 500);
     };
 
     componentDidMount() {
-        this.findAllRoomTypes(this.state.currentPage);
+        this.findAllPolicies(this.state.currentPage);
     }
 
-    /*findAllBooks() {
-        fetch("http://localhost:8080/rest/books")
-            .then(response => response.json())
-            .then((data) => {
-                this.setState({books: data});
-            });
-    };*/
-
-    findAllRoomTypes(currentPage) {
+    findAllPolicies(currentPage) {
         currentPage -= 1;
-        axios.get("http://localhost:8080/api/test/roomtypes?pageNumber="+currentPage+"&pageSize="+this.state.roomTypesPerPage+"&sortBy=price&sortDir="+this.state.sortDir)
+        axios.get("http://localhost:8080/api/test/policies?pageNumber="+currentPage+"&pageSize="+this.state.policiesPerPage+"&sortBy=title&sortDir="+this.state.sortDir)
             .then(response => response.data)
             .then((data) => {
                 this.setState({
-                    roomTypes: data.content,
+                    policies: data.content,
                     totalPages: data.totalPages,
                     totalElements: data.totalElements,
                     currentPage: data.number + 1
@@ -57,47 +48,17 @@ class RoomTypeList extends Component {
             });
     };
 
-    /*deleteBook = (bookId) => {
-        fetch("http://localhost:8080/rest/books/"+bookId, {
-            method: 'DELETE'
-        })
-        .then(response => response.json())
-        .then((book) => {
-            if(book) {
-                this.setState({"show":true});
-                setTimeout(() => this.setState({"show":false}), 3000);
-                this.setState({
-                    books: this.state.books.filter(book => book.id !== bookId)
-                });
-            } else {
-                this.setState({"show":false});
-            }
-        });
-    };*/
-
-    deleteRoomType = (roomTypeId) => {
-        this.props.deleteRoomType(roomTypeId);
+    deletePolicy = (policyId) => {
+        this.props.deletePolicy(policyId);
         setTimeout(() => {
-            if(this.props.roomTypeObject != null) {
+            if(this.props.policyObject != null) {
                 this.setState({"show":true});
                 setTimeout(() => this.setState({"show":false}), 3000);
-                this.findAllRoomTypes(this.state.currentPage);
+                this.findAllPolicies(this.state.currentPage);
             } else {
                 this.setState({"show":false});
             }
         }, 1000);
-        /*axios.delete("http://localhost:8080/rest/books/"+bookId)
-            .then(response => {
-                if(response.data != null) {
-                    this.setState({"show":true});
-                    setTimeout(() => this.setState({"show":false}), 3000);
-                    this.setState({
-                        books: this.state.books.filter(book => book.id !== bookId)
-                    });
-                } else {
-                    this.setState({"show":false});
-                }
-            });*/
     };
 
     changePage = event => {
@@ -105,7 +66,7 @@ class RoomTypeList extends Component {
         if(this.state.search) {
             this.searchData(targetPage);
         } else {
-            this.findAllRoomTypes(targetPage);
+            this.findAllPolicies(targetPage);
         }
         this.setState({
             [event.target.name]: targetPage
@@ -118,7 +79,7 @@ class RoomTypeList extends Component {
             if(this.state.search) {
                 this.searchData(firstPage);
             } else {
-                this.findAllRoomTypes(firstPage);
+                this.findAllPolicies(firstPage);
             }
         }
     };
@@ -129,28 +90,28 @@ class RoomTypeList extends Component {
             if(this.state.search) {
                 this.searchData(this.state.currentPage - prevPage);
             } else {
-                this.findAllRoomTypes(this.state.currentPage - prevPage);
+                this.findAllPolicies(this.state.currentPage - prevPage);
             }
         }
     };
 
     lastPage = () => {
-        let condition = Math.ceil(this.state.totalElements / this.state.roomTypesPerPage);
+        let condition = Math.ceil(this.state.totalElements / this.state.policiesPerPage);
         if(this.state.currentPage < condition) {
             if(this.state.search) {
                 this.searchData(condition);
             } else {
-                this.findAllRoomTypes(condition);
+                this.findAllPolicies(condition);
             }
         }
     };
 
     nextPage = () => {
-        if(this.state.currentPage < Math.ceil(this.state.totalElements / this.state.roomTypesPerPage)) {
+        if(this.state.currentPage < Math.ceil(this.state.totalElements / this.state.policiesPerPage)) {
             if(this.state.search) {
                 this.searchData(this.state.currentPage + 1);
             } else {
-                this.findAllRoomTypes(this.state.currentPage + 1);
+                this.findAllPolicies(this.state.currentPage + 1);
             }
         }
     };
@@ -163,16 +124,16 @@ class RoomTypeList extends Component {
 
     cancelSearch = () => {
         this.setState({"search" : ''});
-        this.findAllRoomTypes(this.state.currentPage);
+        this.findAllPolicies(this.state.currentPage);
     };
 
     searchData = (currentPage) => {
         currentPage -= 1;
-        axios.get("http://localhost:8080/api/test/roomtypes/search/"+this.state.search+"?page="+currentPage+"&size="+this.state.roomTypesPerPage)
+        axios.get("http://localhost:8080/api/test/policies/search/"+this.state.search+"?page="+currentPage+"&size="+this.state.policiesPerPage)
             .then(response => response.data)
             .then((data) => {
                 this.setState({
-                    roomTypes: data.content,
+                    policies: data.content,
                     totalPages: data.totalPages,
                     totalElements: data.totalElements,
                     currentPage: data.number + 1
@@ -181,11 +142,10 @@ class RoomTypeList extends Component {
     };
 
     add = () => {
-        return this.props.history.push("/admin/add");
+        return this.props.history.push("/admin/addpolicy");
     };
 
-    
-    checkRoomType = (Code) => {
+    checkPolicy = (Code) => {
         if (Code === true) {
             return (
                 <td className="text-center">
@@ -202,28 +162,28 @@ class RoomTypeList extends Component {
     };
 
     render() {
-        const {roomTypes, currentPage, totalPages, search} = this.state;
+        const {policies, currentPage, totalPages, search} = this.state;
 
         return (
             <div className="container">
                 <div style={{"display":this.state.show ? "block" : "none"}}>
-                    <MyToast show = {this.state.show} message = {"RoomType Deleted Successfully."} type = {"danger"}/>
+                    <MyToast show = {this.state.show} message = {"Policy Deleted Successfully."} type = {"danger"}/>
                 </div>
                 <Card className={"card"}>
                     <Card.Header>
-                        <div style={{"float":"left"}}> <BsList /> RoomType List
+                        <div style={{"float":"left"}}> <BsList /> Policy List
                         <InputGroup size="sm">
-                                <FormControl placeholder="Search" name="search" value={search}
-                                    className={"info-border bg-dark"}                                   
-                                    onChange={this.searchChange} />                             
-                                <InputGroup.Append>
-                                    <Button size="sm" variant="outline-info" type="button" onClick={this.searchData}>
-                                    <BsSearch />
-                                    </Button>
-                                    <Button size="sm" variant="outline-danger" type="button" onClick={this.cancelSearch}>
-                                     <BsFillXCircleFill />
-                                    </Button>
-                                </InputGroup.Append>
+                            <FormControl placeholder="Search" name="search" value={search}
+                                className={"info-border bg-dark"}                                   
+                                onChange={this.searchChange} />                             
+                            <InputGroup.Append>
+                                <Button size="sm" variant="outline-info" type="button" onClick={this.searchData}>
+                                <BsSearch />
+                                </Button>
+                                <Button size="sm" variant="outline-danger" type="button" onClick={this.cancelSearch}>
+                                    <BsFillXCircleFill />
+                                </Button>
+                            </InputGroup.Append>
                             </InputGroup>
                         </div>
                         <div style={{"float":"right"}}>
@@ -236,44 +196,24 @@ class RoomTypeList extends Component {
                         <Table className="table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                  <th>Title Room Type</th>
-                                  <th>Slug</th>
-                                  <th>Type</th>
-                                  <th onClick={this.sortData}>Price <div className={this.state.sortDir === "asc" ? "arrow arrow-up" : "arrow arrow-down"}> </div></th>
-                                  <th>Size</th>
-                                  <th>Amount</th>
-                                  <th>Capacity</th>
+                                  <th>Title</th>
                                   <th>Description</th>
-                                  <th>Pets</th>
-                                  <th>Breakfast</th>
-                                  <th>Featured</th>
                                 </tr>
                               </thead>
                               <tbody>
                                 {
-                                    roomTypes.length === 0 ?
+                                    policies.length === 0 ?
                                     <tr align="center">
-                                      <td colSpan="11">No RoomTypes Available.</td>
+                                      <td colSpan="2">No Policies Available.</td>
                                     </tr> :
-                                    roomTypes.map((roomType) => (
-                                    <tr key={roomType.id}>
-                                        <td>
-                                            <Image src={roomType.coverPhotoURL} rounded width="100" height="100"/>{roomType.titleRoomType}
-                                        </td>
-                                        <td>{roomType.slug}</td>
-                                        <td>{roomType.type}</td>
-                                        <td>{roomType.price}</td>
-                                        <td>{roomType.size}</td>
-                                        <td>{roomType.amount}</td>
-                                        <td>{roomType.capacity}</td>
-                                        <td>{roomType.description}</td>
-                                        <td> {this.checkRoomType(roomType.pets)}</td>
-                                        <td> {this.checkRoomType(roomType.breakfast)}</td>
-                                        <td> {this.checkRoomType(roomType.featured)}</td>
+                                    policies.map((policy) => (
+                                    <tr key={policy.id}> 
+                                        <td>{policy.title}</td>                                            
+                                        <td>{policy.description}</td>                                                                       
                                         <td>
                                             <ButtonGroup>
-                                                <Link to={"admin/edit/"+roomType.id} className="btn btn-sm btn-outline-primary"><BsPencilSquare /></Link>{' '}
-                                                <Button size="sm" variant="outline-danger" onClick={this.deleteRoomType.bind(this, roomType.id)}><BsFillTrashFill /></Button>
+                                                <Link to={"admin/editpolicy/"+policy.id} className="btn btn-sm btn-outline-primary"><BsPencilSquare /></Link>{' '}
+                                                <Button size="sm" variant="outline-danger" onClick={this.deletePolicy.bind(this, policy.id)}><BsFillTrashFill /></Button>
                                             </ButtonGroup>
                                         </td>
                                     </tr>
@@ -282,7 +222,7 @@ class RoomTypeList extends Component {
                               </tbody>
                         </Table>
                     </Card.Body>
-                    {roomTypes.length > 0 ?
+                    {policies.length > 0 ?
                         <Card.Footer>
                             <div style={{"float":"left"}}>
                                 Showing Page {currentPage} of {totalPages}
@@ -323,14 +263,14 @@ class RoomTypeList extends Component {
 
 const mapStateToProps = state => {
     return {
-        roomTypeObject: state.roomType
+        policyObject: state.policy
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        deleteRoomType: (roomTypeId) => dispatch(deleteRoomType(roomTypeId))
+        deletePolicy: (policyId) => dispatch(deletePolicy(policyId))
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RoomTypeList);
+export default connect(mapStateToProps, mapDispatchToProps)(PolicyList);

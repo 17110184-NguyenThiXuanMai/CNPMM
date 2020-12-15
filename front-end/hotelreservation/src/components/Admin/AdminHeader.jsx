@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../../css/sidebar.css';
 import { Link } from 'react-router-dom'
-import AuthService from "../../services/auth.service";
+import AuthService from "../../services/Login/auth.service";
 
 class AdminHeader extends Component {
   state = {

@@ -6,6 +6,10 @@ import RoomType from './Admin/RoomType';
 import RoomTypeList from './Admin/RoomTypeList';
 import { Provider } from 'react-redux';
 import store from '../services/store';
+import Policy from './Admin/Policy';
+import Discount from './Admin/Discount';
+import Customer from './Admin/Customer';
+import PolicyList from './Admin/PolicyList';
 
 export default class Admin extends Component {
     render() {
@@ -24,7 +28,12 @@ export default class Admin extends Component {
                         <Provider store={store}>
                             <Route path="/admin" exact component={RoomTypeList} />
                             <Route path="/admin/add" exact component={RoomType} />
-                            <Route path="/admin/edit/:id" exact component={RoomType} />                    
+                            <Route path="/admin/edit/:id" exact component={RoomType} /> 
+                            <Route path="/admin/policy" exact component={PolicyList} />
+                            <Route path="/admin/addpolicy" exact component={Policy} />  
+                            <Route path="/admin/editpolicy/:id" exact component={Policy} />                         
+                            <Route path="/admin/discounts" exact component={Discount} />   
+                            <Route path="/admin/customers" exact component={Customer} />                
                         </Provider>
                     </Switch>
                 </div>
