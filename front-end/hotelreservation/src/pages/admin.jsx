@@ -29,7 +29,7 @@ export default class Admin extends Component {
                             <Route path="/admin" exact component={RoomTypeList} />
                             <Route path="/admin/add" exact component={RoomType} />
                             <Route path="/admin/edit/:id" exact component={RoomType} /> 
-                            <Route path="/admin/policy" exact component={PolicyList} />
+                            <Route path="/admin/policy/type=:type" exact component={PolicyList} />
                             <Route path="/admin/addpolicy" exact component={Policy} />  
                             <Route path="/admin/editpolicy/:id" exact component={Policy} />                         
                             <Route path="/admin/discounts" exact component={Discount} />   

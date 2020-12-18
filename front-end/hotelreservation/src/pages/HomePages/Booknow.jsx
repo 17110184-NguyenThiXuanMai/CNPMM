@@ -146,7 +146,7 @@ class Booknow extends Component {
     };
 
     render() {
-        const {titleRoomType, slug,type,size, capacity,pets,breakfast,featured,description, coverPhotoURL, price} = this.state;
+
         return (
             <div className="bg-gra-01">
          <div className="container my-0">

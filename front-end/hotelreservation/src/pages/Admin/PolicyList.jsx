@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import {connect} from 'react-redux';
-import {deletePolicy} from '../../services/index';
+import {deleteService} from '../../services/index';
 
 import './../../css/Style.css';
 import {Card, Table,ButtonGroup, Button, InputGroup, FormControl} from 'react-bootstrap';
@@ -15,32 +15,44 @@ class PolicyList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            policies : [],
+            services : [],
             search : '',
             currentPage : 1,
             policiesPerPage : 5,
             sortDir: "asc",
+            // listServices:[],
         };
     }
 
     sortData = () => {
         setTimeout(() => {
             this.state.sortDir === "asc" ? this.setState({sortDir: "desc"}) : this.setState({sortDir: "asc"});
-            this.findAllPolicies(this.state.currentPage);
+            this.findAllServices(this.state.currentPage);
         }, 500);
     };
 
     componentDidMount() {
-        this.findAllPolicies(this.state.currentPage);
+        this.findAllServices(this.state.currentPage);
+        console.log(this.props.match.params.type);
+        // const typeParam = this.props.match.params.type;
+        // if(this.props.match.params.type==="all"){
+        //     this.setState({
+        //         listServices:this.state.services
+        //     })
+        // }else{
+        //     this.setState({
+        //         listServices:this.state.services.filter(item=>item.type ===typeParam)
+        //     })
+        // }
     }
 
-    findAllPolicies(currentPage) {
+    findAllServices(currentPage) {
         currentPage -= 1;
-        axios.get("http://localhost:8080/api/test/policies?pageNumber="+currentPage+"&pageSize="+this.state.policiesPerPage+"&sortBy=title&sortDir="+this.state.sortDir)
+        axios.get("http://localhost:8080/api/test/services?pageNumber="+currentPage+"&pageSize="+this.state.policiesPerPage+"&sortBy=title&sortDir="+this.state.sortDir)
             .then(response => response.data)
             .then((data) => {
                 this.setState({
-                    policies: data.content,
+                    services: data.content,
                     totalPages: data.totalPages,
                     totalElements: data.totalElements,
                     currentPage: data.number + 1
@@ -48,10 +60,10 @@ class PolicyList extends Component {
             });
     };
 
-    deletePolicy = (policyId) => {
-        this.props.deletePolicy(policyId);
+    deleteService = (serviceId) => {
+        this.props.deleteService(serviceId);
         setTimeout(() => {
-            if(this.props.policyObject != null) {
+            if(this.props.serviceObject != null) {
                 this.setState({"show":true});
                 setTimeout(() => this.setState({"show":false}), 3000);
                 this.findAllPolicies(this.state.currentPage);
@@ -129,11 +141,11 @@ class PolicyList extends Component {
 
     searchData = (currentPage) => {
         currentPage -= 1;
-        axios.get("http://localhost:8080/api/test/policies/search/"+this.state.search+"?page="+currentPage+"&size="+this.state.policiesPerPage)
+        axios.get("http://localhost:8080/api/test/services/search/"+this.state.search+"?page="+currentPage+"&size="+this.state.policiesPerPage)
             .then(response => response.data)
             .then((data) => {
                 this.setState({
-                    policies: data.content,
+                    services: data.content,
                     totalPages: data.totalPages,
                     totalElements: data.totalElements,
                     currentPage: data.number + 1
@@ -145,7 +157,7 @@ class PolicyList extends Component {
         return this.props.history.push("/admin/addpolicy");
     };
 
-    checkPolicy = (Code) => {
+    checkService = (Code) => {
         if (Code === true) {
             return (
                 <td className="text-center">
@@ -162,8 +174,8 @@ class PolicyList extends Component {
     };
 
     render() {
-        const {policies, currentPage, totalPages, search} = this.state;
-
+        const {services, currentPage, totalPages, search} = this.state;
+        const typeParam = this.props.match.params.type;
         return (
             <div className="container">
                 <div style={{"display":this.state.show ? "block" : "none"}}>
@@ -197,23 +209,25 @@ class PolicyList extends Component {
                             <thead>
                                 <tr>
                                   <th>Title</th>
+                                  <th>Type</th>
                                   <th>Description</th>
                                 </tr>
                               </thead>
-                              <tbody>
+                              <tbody>                                
                                 {
-                                    policies.length === 0 ?
+                                    services.length === 0 ?
                                     <tr align="center">
                                       <td colSpan="2">No Policies Available.</td>
                                     </tr> :
-                                    policies.map((policy) => (
-                                    <tr key={policy.id}> 
-                                        <td>{policy.title}</td>                                            
-                                        <td>{policy.description}</td>                                                                       
+                                    services.filter(item=>item.type ===typeParam).map((service) => (                                                                                   
+                                        <tr key={service.id}>                                  
+                                        <td>{service.title}</td>    
+                                        <td>{service.type}</td>                                        
+                                        <td>{service.description}</td>                                                                       
                                         <td>
                                             <ButtonGroup>
-                                                <Link to={"admin/editpolicy/"+policy.id} className="btn btn-sm btn-outline-primary"><BsPencilSquare /></Link>{' '}
-                                                <Button size="sm" variant="outline-danger" onClick={this.deletePolicy.bind(this, policy.id)}><BsFillTrashFill /></Button>
+                                                <Link to={"admin/editpolicy/"+service.id} className="btn btn-sm btn-outline-primary"><BsPencilSquare /></Link>{' '}
+                                                <Button size="sm" variant="outline-danger" onClick={this.deleteService.bind(this, service.id)}><BsFillTrashFill /></Button>
                                             </ButtonGroup>
                                         </td>
                                     </tr>
@@ -222,7 +236,7 @@ class PolicyList extends Component {
                               </tbody>
                         </Table>
                     </Card.Body>
-                    {policies.length > 0 ?
+                    {services.length > 0 ?
                         <Card.Footer>
                             <div style={{"float":"left"}}>
                                 Showing Page {currentPage} of {totalPages}
@@ -263,13 +277,13 @@ class PolicyList extends Component {
 
 const mapStateToProps = state => {
     return {
-        policyObject: state.policy
+        serviceObject: state.service
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        deletePolicy: (policyId) => dispatch(deletePolicy(policyId))
+        deleteService: (serviceId) => dispatch(deleteService(serviceId))
     };
 };
 

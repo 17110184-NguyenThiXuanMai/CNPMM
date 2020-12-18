@@ -30,7 +30,6 @@ class RoomType extends Component {
         id:'', titleRoomType:'', slug:'',type:'',size:'',pets:'',breakfast:'',television:'', bath:'', amount:'', capacity:'',description:'', coverPhotoURL:'', price:''
     };
     
-
     componentDidMount() {
         const roomTypeId = +this.props.match.params.id;
         if(roomTypeId) {
@@ -359,8 +358,7 @@ class RoomType extends Component {
                                         {this.state.types.map(type =>
                                             <option key={type.value} value={type.value}>
                                                 {type.display}
-                                            </option>
-                                            
+                                            </option>                               
                                         )}
                                     </Form.Control>
                                 </Form.Group>

@@ -212,10 +212,11 @@ class RoomTypeList extends Component {
                 <Card className={"card"}>
                     <Card.Header>
                         <div style={{"float":"left"}}> <BsList /> RoomType List
-                        <InputGroup size="sm">
+                            <InputGroup className="mb-3">
                                 <FormControl placeholder="Search" name="search" value={search}
                                     className={"info-border bg-dark"}                                   
-                                    onChange={this.searchChange} />                             
+                                    onChange={this.searchChange}
+                                     />                             
                                 <InputGroup.Append>
                                     <Button size="sm" variant="outline-info" type="button" onClick={this.searchData}>
                                     <BsSearch />
@@ -254,7 +255,7 @@ class RoomTypeList extends Component {
                                 {
                                     roomTypes.length === 0 ?
                                     <tr align="center">
-                                      <td colSpan="11">No RoomTypes Available.</td>
+                                      <td colSpan="12">No RoomTypes Available.</td>
                                     </tr> :
                                     roomTypes.map((roomType) => (
                                     <tr key={roomType.id}>
@@ -315,6 +316,7 @@ class RoomTypeList extends Component {
                                     </InputGroup.Append>
                                 </InputGroup>
                             </div>
+
                         </Card.Footer> : null
                      }
                 </Card>

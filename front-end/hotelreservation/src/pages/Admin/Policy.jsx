@@ -1,9 +1,10 @@
 import React, {Component } from 'react';
 
 import {connect} from 'react-redux';
-import {savePolicy, fetchPolicy, updatePolicy} from '../../services/index';
+import {saveService, fetchService, updateService} from '../../services/index';
 import {Card, Form, Button, Col, Row} from 'react-bootstrap';
 import MyToast from '../../components/Admin/MyToast';
+import axios from 'axios';
 import {BsListUl, BsArrowCounterclockwise, BsPlusSquareFill} from "react-icons/bs";
 
 class Policy extends Component {
@@ -11,72 +12,135 @@ class Policy extends Component {
         super(props);
         this.state = this.initialState;
         this.state = {
+            types: [],
             show : false
         };
-        this.policyChange = this.policyChange.bind(this);
-        this.submitPolicy = this.submitPolicy.bind(this);
+        this.serviceChange = this.serviceChange.bind(this);
+        this.submitService = this.submitService.bind(this);
     }  
 
     initialState = {
-        id:'', title:'', description:''
+        id:'', title:'', type:'', description:''
     };
     
     componentDidMount() {
-        const policyId = + this.props.match.params.id;
-        if(policyId) {
-            this.findPolicyById(policyId);
+        const serviceId = + this.props.match.params.id;
+        if(serviceId) {
+            this.findServiceById(serviceId);
         }
+        this.findAllTypes();
     }
 
-    findPolicyById = (policyId) => {
-        this.props.fetchPolicy(policyId);
+    findServiceById = (serviceId) => {
+        this.props.fetchService(serviceId);
         setTimeout(() => {
-            let policy = this.props.policyObject.policy;
-            if(policy != null) {
+            let service = this.props.serviceObject.service;
+            if(service != null) {
                 this.setState({
-                    id: policy.id,
-                    title: policy.title,
-                    description: policy.description,
+                    id: service.id,
+                    title: service.title,
+                    description: service.description,
                 });
             }
         }, 1000);
     };
 
-    resetPolicy = () => {
+    findAllTypes = () => {
+        axios.get("http://localhost:8080/api/test/services/types")
+            .then(response => response.data)
+            .then((data) => {
+                this.setState({
+                    types: [{value:'', display:'Select Type'}]
+                        .concat(data.map(type => {
+                            return {value:type, display:type}
+                        }))
+                });
+            });
+    };
+
+    resetService = () => {
         this.setState(() => this.initialState);
     };
 
-    submitPolicy = event => {
+    // submitService = event => {
+    //     event.preventDefault();
+
+    //     const service = {
+    //         title: this.state.title,  
+    //         type: this.state.type,      
+    //         description: this.state.description,
+    //     };
+
+    //     this.props.saveService(service,()=>{
+    //         // console.log(this.props.savedServiceObject.service); 
+    //         this.props.history.push(`/admin/policy/type=${this.state.type}`);
+    //         if(this.props.savedServiceObject.service != null) {
+    //             console.log('worked');
+    //         this.setState({"show":true, "method":"post"},()=>{
+    //                 this.setState({"show":false});
+    //             });
+    //             // setTimeout(() => this.setState({"show":false}), 3000);
+    //         } else {
+    //             this.setState({"show":false},()=>{
+    //                 // this.props.history.push(`/admin/policy/type=${this.state.type}`)
+    //             });
+                
+    //         }
+    //         // this.props.history.push(`/admin/policy/type=${this.state.type}`)
+    //         console.log(this.props.savedServiceObject.service); 
+    //     });
+    //     // this.props.saveService(service);
+    //     // console.log(service); 
+    //     // setTimeout(() => {
+    //     //     if(this.props.savedServiceObject.service != null) {
+    //     //         this.setState({"show":true, "method":"post"});
+    //     //         setTimeout(() => this.setState({"show":false}), 3000);
+    //     //     } else {
+    //     //         this.setState({"show":false});
+    //     //     }
+            
+    //     // }, 2000); 
+    //     // this.setState(this.initialState, () => { 
+    //     // this.props.history.push(`/admin/policy/type=${this.state.type}`)})
+    //     this.setState(this.initialState)
+    //     this.props.history.push(`/admin/policy/type=${this.state.type}`)
+    // };
+
+
+    submitService = event => {
         event.preventDefault();
 
-        const policy = {
-            title: this.state.title,        
+        const service = {
+            title: this.state.title,  
+            type: this.state.type,      
             description: this.state.description,
         };
 
-        this.props.savePolicy(policy);
+        this.props.saveService(service);
         setTimeout(() => {
-            if(this.props.savedPolicyObject.policy != null) {
+            if(!!this.props.savedServiceObject.service) {
                 this.setState({"show":true, "method":"post"});
                 setTimeout(() => this.setState({"show":false}), 3000);
+                
             } else {
                 this.setState({"show":false});
             }
         }, 2000);
-
         this.setState(this.initialState);
+        this.props.history.push(`/admin/policy/type=${this.state.type}`)
     };
 
-    updatePolicy = event => {
+    updateService = event => {
         event.preventDefault();
 
-        const policy = {
-            title: this.state.title,      
+        const service = {
+            title: this.state.title, 
+            type: this.state.type,     
             description: this.state.description,
         };
-        this.props.updatePolicy(policy);
+        this.props.updateService(service);
         setTimeout(() => {
-            if(this.props.updatedPolicyObject.policy != null) {
+            if(this.props.updatedServiceObject.service != null) {
                 this.setState({"show":true, "method":"put"});
                 setTimeout(() => this.setState({"show":false}), 3000);
             } else {
@@ -87,18 +151,20 @@ class Policy extends Component {
         this.setState(this.initialState);
     };
 
-    policyChange = event => {
+    serviceChange = event => {
         this.setState({
             [event.target.name]:event.target.value
+            
         });
     };
 
-    policyList = () => {
-        return this.props.history.push("/admin/policy");
+    serviceList = () => {
+        return this.props.history.push(`/admin/policy/type=${this.state.type}`);
+        //  console.log(this.state.type);
     };
 
     render() {
-        const {title,description} = this.state;
+        const {title,description, type} = this.state;
         
         return (
             <div className="container">
@@ -109,22 +175,35 @@ class Policy extends Component {
                     <Card.Header>
                         {this.state.id ? <BsPlusSquareFill /> : <BsPlusSquareFill /> } {this.state.id ? " Update Policy" :  " Add New Policy"}
                     </Card.Header>
-                    <Form onReset={this.resetPolicy} onSubmit={this.state.id ? this.updatePolicy : this.submitPolicy} id="policyFormId">
+                    <Form onReset={this.resetService} onSubmit={this.state.id ? this.updateService : this.submitService} id="policyFormId">
                         <Card.Body>
                             <Form.Row>
                                 <Form.Group as={Col} controlId="formGridTitle">
                                     <Form.Label>Title Policy</Form.Label>
                                     <Form.Control required autoComplete="off"
                                         type="test" name="title"
-                                        value={title} onChange={this.policyChange}
+                                        value={title} onChange={this.serviceChange}
                                         className={"bg-dark"}
                                         placeholder="Enter Title Policy" />
+                                </Form.Group>
+                                <Form.Group as={Col} controlId="formGridType">
+                                    <Form.Label>Type</Form.Label>
+                                    <Form.Control required as="select"
+                                        custom onChange={this.serviceChange}
+                                        name="type" value={type}
+                                        className={"bg-dark"}>
+                                        {this.state.types.map(type =>
+                                            <option key={type.value} value={type.value}>
+                                                {type.display}
+                                            </option>
+                                        )}
+                                    </Form.Control>
                                 </Form.Group>
                                 <Form.Group as={Col} controlId="formGridDescription">
                                     <Form.Label>Description</Form.Label>
                                     <Form.Control required autoComplete="off"
                                         type="test" name="description"
-                                        value={description} onChange={this.policyChange}
+                                        value={description} onChange={this.serviceChange}
                                         className={"bg-dark"}
                                         placeholder="Enter Description" />
                                 </Form.Group>
@@ -137,7 +216,7 @@ class Policy extends Component {
                                 </Button>{' '}
                                 <Button size="sm" variant="info" type="reset"> <BsArrowCounterclockwise /> Reset
                                 </Button>{' '}
-                                <Button size="sm" variant="info" type="button" onClick={this.policyList.bind()}> <BsListUl /> Policy List
+                                <Button size="sm" variant="info" type="button" onClick={this.serviceList.bind()}> <BsListUl /> Policy List
                                 </Button>       
                             </Row>             
                         </Card.Footer>
@@ -150,17 +229,17 @@ class Policy extends Component {
 
 const mapStateToProps = state => {
     return {
-        savedPolicyObject: state.policy,
-        policyObject: state.policy,
-        updatedPolicyObject: state.policy
+        savedServiceObject: state.service,
+        serviceObject: state.service,
+        updatedServiceObject: state.service
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        savePolicy: (policy) => dispatch(savePolicy(policy)),
-        fetchPolicy: (policyId) => dispatch(fetchPolicy(policyId)),
-        updatePolicy: (policy) => dispatch(updatePolicy(policy))
+        saveService: (service) => dispatch(saveService(service)),
+        fetchService: (serviceId) => dispatch(fetchService(serviceId)),
+        updateService: (service) => dispatch(updateService(service))
     };
 };
 

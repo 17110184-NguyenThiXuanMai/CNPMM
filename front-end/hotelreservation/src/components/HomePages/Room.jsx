@@ -118,7 +118,7 @@ class Room extends Component {
             roomTypes.map((roomType) => (
                 <article className="room">
                     <div className="img-container">
-                        <Image src={roomType.coverPhotoURL} r alt="single room" />
+                        <Image src={roomType.coverPhotoURL} alt="single room" />
                         <div className="price-top">
                             <h6>${roomType.price}</h6>
                             <p>per night</p>

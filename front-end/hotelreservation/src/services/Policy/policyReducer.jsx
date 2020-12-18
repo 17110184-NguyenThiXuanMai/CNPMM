@@ -1,23 +1,22 @@
-import {SAVE_POLICY_REQUEST, FETCH_POLICY_REQUEST, UPDATE_POLICY_REQUEST, DELETE_POLICY_REQUEST, POLICY_SUCCESS, POLICY_FAILURE} from "./policy";
-
+import {SAVE_SERVICE_REQUEST, FETCH_SERVICE_REQUEST, UPDATE_SERVICE_REQUEST, DELETE_SERVICE_REQUEST, SERVICE_SUCCESS, SERVICE_FAILURE} from "./policy";
 const initialState = {
-    policy: '', error: ''
+    service: '', error: ''
 };
 
 const reducer = (state = initialState, action) => {
     switch(action.type) {
-        case SAVE_POLICY_REQUEST || FETCH_POLICY_REQUEST || UPDATE_POLICY_REQUEST || DELETE_POLICY_REQUEST:
+        case SAVE_SERVICE_REQUEST || FETCH_SERVICE_REQUEST || UPDATE_SERVICE_REQUEST || DELETE_SERVICE_REQUEST:
             return {
                 ...state
             };
-        case POLICY_SUCCESS:
+        case SERVICE_SUCCESS:
             return {
-                policy: action.payload,
+                service: action.payload,
                 error: ''
             };
-        case POLICY_FAILURE:
+        case SERVICE_FAILURE:
             return {
-                policy: '',
+                service: '',
                 error: action.payload
             };
         default: return state;

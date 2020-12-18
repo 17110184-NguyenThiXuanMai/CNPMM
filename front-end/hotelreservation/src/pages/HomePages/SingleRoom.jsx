@@ -169,7 +169,6 @@ class SingleRoom extends Component {
     };
 
     render() {
-        const {titleRoomType, slug,type,size,amount, capacity,pets,breakfast,television, bath,description, coverPhotoURL, price} = this.state;
 
         return (
             <div>

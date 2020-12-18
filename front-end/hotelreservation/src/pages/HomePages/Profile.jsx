@@ -3,19 +3,6 @@ import { Redirect } from "react-router-dom";
 import '../../css/profile.css'
 import AuthService from "../../services/Login/auth.service";
 
-import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  FormGroup,
-  Form,
-  Input,
-  Container,
-  Row,
-  Col
-} from "reactstrap";
-
 export default class Profile extends Component {
   constructor(props) {
     super(props);

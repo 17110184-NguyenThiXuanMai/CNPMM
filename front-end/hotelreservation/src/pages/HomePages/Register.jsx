@@ -137,7 +137,7 @@ export default class Register extends Component {
           >
             {!this.state.successful && (
               <div>
-                <div className="input-group">
+                <div className="input-group2">
                   <Input
                     type="text"
                     className="input--style-3"
@@ -149,7 +149,7 @@ export default class Register extends Component {
                   />
                 </div>
 
-                <div className="input-group">  
+                <div className="input-group2">  
                   <Input
                     type="text"
                     className="input--style-3"
@@ -161,7 +161,7 @@ export default class Register extends Component {
                   />
                 </div>
 
-                <div className="input-group">
+                <div className="input-group2">
                   <Input
                     type="password"
                     className="input--style-3"
@@ -180,7 +180,7 @@ export default class Register extends Component {
             )}
 
             {this.state.message && (
-              <div className="input-group">
+              <div className="input-group2">
                 <div className="input--style-3">
                 <div
                   className={

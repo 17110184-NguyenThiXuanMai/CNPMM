@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Title from './Title';
-import '../../css/policy.css'
+import '../../css/restaurant.css'
 import { BsChevronRight } from "react-icons/bs";
 
 export default class Restaurant extends Component {
@@ -19,7 +19,7 @@ export default class Restaurant extends Component {
                                         <span>Our resturent</span>
                                         <h3>Dining & Drinks</h3>
                                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod<br /> tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim <br />veniam, quis nostrud.</p>
-                                        <a href="#" class="btn border-btn">Learn More <BsChevronRight /> </a>
+                                        <a href="#" class="btn-2 border-btn">Learn More <BsChevronRight /> </a>
                                     </div>
                                 </div>
                             </div>
@@ -33,7 +33,7 @@ export default class Restaurant extends Component {
                                         <span>Our Pool</span>
                                         <h3>Swimming Pool</h3>
                                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod<br /> tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim <br />veniam, quis nostrud.</p>
-                                        <a href="#" class="btn border-btn">Learn More  <BsChevronRight /> </a>
+                                        <a href="#" class="btn-2 border-btn">Learn More  <BsChevronRight /> </a>
                                     </div>
                                 </div>
                             </div>

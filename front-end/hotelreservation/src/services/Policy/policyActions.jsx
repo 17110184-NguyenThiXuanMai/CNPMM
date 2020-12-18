@@ -1,92 +1,94 @@
-import {SAVE_POLICY_REQUEST, FETCH_POLICY_REQUEST, UPDATE_POLICY_REQUEST, DELETE_POLICY_REQUEST, POLICY_SUCCESS, POLICY_FAILURE} from "./policy";
+import {SAVE_SERVICE_REQUEST, FETCH_SERVICE_REQUEST, UPDATE_SERVICE_REQUEST, DELETE_SERVICE_REQUEST, SERVICE_SUCCESS, SERVICE_FAILURE} from "./policy";
 import axios from 'axios';
+import { Callbacks } from "jquery";
 
-export const savePolicy = policy => {
+export const saveService = (service) => {
     return dispatch => {
-        dispatch(savePolicyRequest());
-        axios.post("http://localhost:8080/api/test/policies", policy)
+        dispatch(saveServiceRequest());
+        axios.post("http://localhost:8080/api/test/services", service)
             .then(response => {
-                dispatch(policySuccess(response.data));
+                dispatch(serviceSuccess(response.data));
+
             })
             .catch(error => {
-                dispatch(policyFailure(error));
+                dispatch(serviceFailure(error));
             });
     };
 };
 
-const savePolicyRequest = () => {
+const saveServiceRequest = () => {
     return {
-        type: SAVE_POLICY_REQUEST
+        type: SAVE_SERVICE_REQUEST
     };
 };
 
-const fetchPolicyRequest = () => {
+const fetchServiceRequest = () => {
     return {
-        type: FETCH_POLICY_REQUEST
+        type: FETCH_SERVICE_REQUEST
     };
 };
 
-export const fetchPolicy = policyId => {
+export const fetchService = serviceId => {
     return dispatch => {
-        dispatch(fetchPolicyRequest());
-        axios.get("http://localhost:8080/api/test/policies/"+policyId)
+        dispatch(fetchServiceRequest());
+        axios.get("http://localhost:8080/api/test/services/"+serviceId)
             .then(response => {
-                dispatch(policySuccess(response.data));
+                dispatch(serviceSuccess(response.data));
             })
             .catch(error => {
-                dispatch(policyFailure(error));
+                dispatch(serviceFailure(error));
             });
     };
 };
 
-const updatePolicyRequest = () => {
+const updateServiceRequest = () => {
     return {
-        type: UPDATE_POLICY_REQUEST
+        type: UPDATE_SERVICE_REQUEST
     };
 };
 
-export const updatePolicy = policy => {
+export const updateService = service => {
     return dispatch => {
-        dispatch(updatePolicyRequest());
-        axios.put("http://localhost:8080/api/test/policies", policy)
+        dispatch(updateServiceRequest());
+        axios.put("http://localhost:8080/api/test/services", service)
             .then(response => {
-                dispatch(policySuccess(response.data));
+                dispatch(serviceSuccess(response.data));
             })
             .catch(error => {
-                dispatch(policyFailure(error));
+                dispatch(serviceFailure(error));
             });
     };
 };
 
-const deletePolicyRequest = () => {
+const deleteServiceRequest = () => {
     return {
-        type: DELETE_POLICY_REQUEST
+        type: DELETE_SERVICE_REQUEST
     };
 };
 
-export const deletePolicy = policyId => {
+export const deleteService = serviceId => {
     return dispatch => {
-        dispatch(deletePolicyRequest());
-        axios.delete("http://localhost:8080/api/test/policies/"+ policyId)
+        dispatch(deleteServiceRequest());
+        axios.delete("http://localhost:8080/api/test/services/"+ serviceId)
             .then(response => {
-                dispatch(policySuccess(response.data));
+                dispatch(serviceSuccess(response.data));
             })
             .catch(error => {
-                dispatch(policyFailure(error));
+                dispatch(serviceFailure(error));
             });
     };
 };
 
-const policySuccess = policy => {
+const serviceSuccess = service => {
     return {
-        type: POLICY_SUCCESS,
-        payload: policy
+        type: SERVICE_SUCCESS,
+        payload: service
     };
 };
 
-const policyFailure = error => {
+const serviceFailure = error => {
     return {
-        type: POLICY_FAILURE,
+        type: SERVICE_FAILURE,
         payload: error
     };
 };
